@@ -11,7 +11,6 @@ export default function Checkbox() {
             </div>
             <input type="checkbox" onChange={(e) => { setChecked(e.target.checked) }} id={id} className='hidden' />
             test
-
         </label>
     )
 }

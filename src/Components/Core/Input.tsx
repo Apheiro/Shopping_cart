@@ -12,7 +12,7 @@ export default function Input({ variant, rangeType }: Props) {
         <>
             {
                 variant === 'search' &&
-                <input type="text" placeholder="Search" className={`outline-none bg-neutral-500 bg-opacity-10 rounded-lg p-1 placeholder:text-neutral-500 text-center focus:bg-opacity-30 font-semibold ${focusStyle}`} />
+                <input type="text" placeholder="Search" className={`outline-none bg-transparent rounded-lg p-1 placeholder:text-neutral-500 text-center focus:bg-neutral-500 focus:bg-opacity-20 font-semibold ${focusStyle}`} />
             }
 
             {

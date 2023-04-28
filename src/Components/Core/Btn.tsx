@@ -27,12 +27,12 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
             className += 'p-3 bg-lime-500 bg-opacity-30 text-base text-lime-500 hover:bg-opacity-50';
             break;
         case 'cart':
-            className += 'p-2 bg-transparent text-base text-neutral-100 opacity-40 hover:bg-db-2 hover:bg-opacity-50 hover:opacity-100';
+            className += 'p-2 flex items-center gap-2 bg-transparent text-base text-neutral-100 opacity-40 hover:bg-white hover:bg-opacity-[0.03] hover:opacity-100';
             break;
         default:
     }
 
-    return <Component className={`${className} ${classNameCustom}`} {...props} />;
+    return <Component className={`${className} ${classNameCustom} `} {...props} />;
 }
 
 export default Btn

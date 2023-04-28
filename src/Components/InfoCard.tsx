@@ -5,15 +5,16 @@ import { IconChevronDown } from '@tabler/icons-react';
 interface Props {
     title: string,
     description: string,
+    customClass?: string,
     variant: 'folding' | 'static'
 }
 
-export default function InfoCard({ title, description, variant }: Props) {
+export default function InfoCard({ title, description, variant, customClass }: Props) {
     const [foldCard, setFoldCard] = useState<boolean>(false)
     const titleStyle: string = 'flex gap-3 items-center text-neutral-400 text-xl font-bold flex justify-between'
     const descriptionStyle: string = 'text-neutral-300 text-sm'
     return (
-        <div className='bg-db-1 rounded-lg p-3 w-full flex flex-col gap-2'>
+        <div className={`${customClass} bg-db-1 rounded-lg p-3 w-full flex flex-col gap-2`} key={crypto.randomUUID()}>
             {
                 variant === 'static' &&
                 <>

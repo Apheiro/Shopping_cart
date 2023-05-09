@@ -1,25 +1,22 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
-import Product from "./Product";
-import ErrorPage from "./ErrorPage";
 import Search from "./Search";
+import ErrorPage from "./ErrorPage";
+import Product from "./Product";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
-        errorElement: <ErrorPage />,
-        children: [
-            {
-                path: "/Product/:id",
-                element: <Product />
-            },
-            {
-                path: "/search/:query",
-                element: <Search />
-            }
-        ]
-    }
+        errorElement: <ErrorPage />
+    }, {
+        path: "/Search",
+        element: <Search />,
+    }, {
+        path: "/Product",
+        element: <Product />,
+    },
+
 ])
 
 export default function RouteSwitch() { return <RouterProvider router={router} /> }

@@ -1,8 +1,9 @@
 import Btn from './Core/Btn'
 import { IconBrandTwitterFilled, IconBrandFacebookFilled, IconBrandInstagram } from '@tabler/icons-react'
-export default function Footer() {
+import { memo } from 'react'
+const Footer = memo(() => {
     return (
-        <footer className="bg-db-1 w-full flex justify-center items-center p-4 ">
+        <footer className="bg-dbm w-full flex justify-center items-center p-4 ">
             <div className='md:grid md:max-w-7xl gap-7 flex flex-col'>
                 <div className="row-start-1 row-end-3 flex flex-col gap-3">
                     <h3 className="text-lg font-bold ">About us</h3>
@@ -34,9 +35,11 @@ export default function Footer() {
                         <Btn variant='cart' ><IconBrandFacebookFilled /></Btn>
                         <Btn variant='cart' ><IconBrandInstagram /></Btn>
                     </div>
-
                 </div>
             </div>
         </footer>
     );
-}
+})
+
+
+export default Footer

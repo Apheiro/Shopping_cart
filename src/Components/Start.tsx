@@ -8,10 +8,9 @@ interface Props {
 
 export default function Start({ children }: Props) {
     const [load, setLoad] = useState(false);
-
     return (
         <div className='flex justify-center items-center w-full h-full'>
-            <div className='flex flex-col gap-1 max-w-xl'>
+            <div className='flex flex-col gap-4 max-w-xl'>
                 <h1 className=' text-5xl sm:text-6xl text-transparent font-bold bg-clip-text bg-gradient-to-br from-purple-500 to-indigo-700'>
                     STREAMLINE YOUR<br />
                     SHOPPING!

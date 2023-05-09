@@ -1,5 +1,5 @@
 
-import InfoCard from '../Components/InfoCard'
+import InfoCard from './Core/InfoCard'
 import { useMediaQuery } from '@mantine/hooks';
 
 export default function Features() {
@@ -14,8 +14,8 @@ export default function Features() {
     ]
     return (
         <div className='flex flex-col gap-3 w-full max-w-4xl'>
-            <h2 className=' font-bold text-xl self-start'>Features</h2>
-            <div className={`${wide ? 'grid-cols-2 grid-rows-3' : 'flex flex-col'} grid gap-4`}>
+            <h2 className=' font-bold text-lg 2sm:text-xl self-start'>Features</h2>
+            <div className={`${wide ? 'grid-cols-2 grid-rows-3' : 'flex flex-col'} grid gap-5`}>
                 {
                     features.map(({ title, description }, index) => {
                         return <InfoCard key={`Feature-${index}`} title={title} description={description} variant={wide ? 'static' : 'folding'} />

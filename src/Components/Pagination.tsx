@@ -4,10 +4,11 @@ import Btn from "./Core/Btn"
 import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react"
 
 interface Props {
-    totalPages: number
+    totalPages: number,
+    customClass?: string
 }
 
-export default function Pagination({ totalPages }: Props) {
+export default function Pagination({ totalPages, customClass }: Props) {
     const [indexSelected, setIndexSelected] = useState(1)
     const [indexPages, setIndexPages] = useState<number[]>([1, 2, 3])
 
@@ -38,17 +39,15 @@ export default function Pagination({ totalPages }: Props) {
     }
 
     return (
-        <div className='flex gap-2 items-center '>
+        <div className={`${customClass} flex gap-2 items-center `}>
             <Btn variant="base" id='previous' onClick={changeIndexPage} classNameCustom="!p-1"><IconChevronLeft /></Btn>
-            {!indexPages.includes(1) && <Btn variant='cart' onClick={() => { setIndexSelected(1) }}>1 ...</Btn>}
+            {!indexPages.includes(1) && <Btn variant='cart' onClick={() => { setIndexSelected(1) }}>1...</Btn>}
             {
-                indexPages.map((index) => {
-                    return (
-                        <Btn variant="cart" key={index} onClick={() => { setIndexSelected(index) }} classNameCustom={indexSelected === index && '!bg-db-2 !opacity-100'}>{index}</Btn>
-                    )
-                })
+                indexPages.map((index) =>
+                    <Btn variant="cart" key={index} onClick={() => { setIndexSelected(index) }} classNameCustom={`${indexSelected === index && '!bg-dbl !opacity-100'} text-sm`}>{index}</Btn>
+                )
             }
-            {!indexPages.includes(totalPages) && <Btn variant='cart' onClick={() => { setIndexSelected(totalPages) }}>... {`${totalPages}`}</Btn>}
+            {!indexPages.includes(totalPages) && <Btn variant='cart' onClick={() => { setIndexSelected(totalPages) }}>...{`${totalPages}`}</Btn>}
             <Btn variant="base" id='next' onClick={changeIndexPage} classNameCustom="!p-1"><IconChevronRight /></Btn>
         </div>
     )

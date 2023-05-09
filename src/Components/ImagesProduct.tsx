@@ -53,34 +53,33 @@ export default function ImagesProduct({ imgs }: Props) {
         [ThumbnailPlugin(instanceRef)]
     )
 
-    const imageStyle = 'keen-slider bg-db-1 rounded-lg text-neutral-200'
-    const sliderStyle = 'keen-slider__slide aspect-square bg-db-1 rounded-lg text-neutral-200 p-2'
+
+    const imageStyle = 'w-full aspect-square bg-dbm rounded-lg text-neutral-200'
+    const sliderStyle = ' w-full  bg-dbm rounded-lg text-neutral-200 p-2'
     const bgStyle = 'w-full aspect-square bg-no-repeat bg-center bg-contain'
+
     return (
-        <div className="w-full flex flex-col gap-5">
-            <div ref={sliderRef} className={imageStyle}>
+        <div className="w-full aspect-square flex flex-col gap-4">
+            <div ref={sliderRef} className={`keen-slider ${imageStyle}`}>
                 {
-                    imgs.map((img) => (
-                        <div className={sliderStyle}>
-                            <div className={bgStyle} style={{ backgroundImage: `url(${img})` }}></div>
+                    imgs.map((img, index) => (
+                        <div className={`keen-slider__slide ${sliderStyle}`} key={`imgSlider${index + 1}`}>
+                            <div className={bgStyle} id={`imgSlider${index}`} style={{ backgroundImage: `url(${img})` }}></div>
                         </div>
                     ))
                 }
 
             </div>
-
             <div ref={thumbnailRef} className="keen-slider thumbnail">
                 {
-                    imgs.map((img) => (
-                        <div className={sliderStyle}>
+                    imgs.map((img, index) => (
+                        <div className={`keen-slider__slide ${sliderStyle}`} key={`imgSliderThmb${index + 1}`}>
                             <div className={bgStyle} style={{ backgroundImage: `url(${img})` }}></div>
                         </div>
                     ))
                 }
 
             </div>
-
-
         </div>
     )
 }

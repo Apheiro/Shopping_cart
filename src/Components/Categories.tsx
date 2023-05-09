@@ -1,4 +1,4 @@
-import CategoryBtn from '../Components/Core/CategoryBtn'
+import CategoryBtn from './Core/CategoryBtn'
 import { useMediaQuery } from '@mantine/hooks';
 import {
     IconDeviceTv, IconDeviceLaptop,
@@ -14,7 +14,7 @@ import {
 type Category = { svg: React.ReactNode, title: string, link?: string }[]
 
 export default function Categories() {
-    const wide = useMediaQuery('(max-width: 870px)')
+    const wide = useMediaQuery('(max-width: 935px)')
 
     const svgProps: { stroke: number, size: number } = {
         stroke: 1,
@@ -44,9 +44,9 @@ export default function Categories() {
 
 
     return (
-        <div className='flex flex-col gap-3 h-3/4 w-full max-w-6xl '>
-            <h2 className=' font-bold text-xl self-start'>Categories</h2>
-            <div className='grid  scrollbar-thin overflow-y-scroll grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2 2md:overflow-hidden 2md:h-[unset] 2md:grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))] 2md:gap-5'>
+        <div className='flex flex-col gap-3 h-100 w-full max-w-6xl sm:h-auto justify-center'>
+            <h2 className=' font-bold text-lg sm:text-xl self-start'>Categories</h2>
+            <div className='grid scrollbar overflow-y-auto grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-3  lg:( overflow-hidden gap-5 grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]) '>
                 {
                     categories.map(({ svg, title, link }, index) => {
                         return <CategoryBtn key={`categorie-${index}`} svg={svg} title={title} link={link} />

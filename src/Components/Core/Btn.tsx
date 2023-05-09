@@ -15,7 +15,7 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
     let className: string = 'box-border rounded-lg ease-in-out duration-300 transition-all font-semibold leading-3 ';
     switch (variant) {
         case 'shop':
-            className += 'p-4 border-solid border-4 text-xl text-dv border-dv hover:bg-dv hover:bg-opacity-20';
+            className += 'p-4 bg-transparent border-solid border-4 text-xl text-dv border-dv hover:(bg-dv bg-opacity-20)';
             break;
         case 'base':
             className += 'p-3 bg-dv bg-opacity-30 text-base text-violet-400 hover:bg-opacity-50';
@@ -27,7 +27,7 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
             className += 'p-3 bg-lime-500 bg-opacity-30 text-base text-lime-500 hover:bg-opacity-50';
             break;
         case 'cart':
-            className += 'p-2 flex items-center gap-2 bg-transparent text-base text-neutral-100 opacity-40 hover:bg-white hover:bg-opacity-[0.03] hover:opacity-100';
+            className += 'p-2 flex items-center gap-2 bg-transparent text-base text-neutral-100 opacity-40 hover:(bg-white bg-opacity-[0.03] opacity-100)';
             break;
         default:
     }

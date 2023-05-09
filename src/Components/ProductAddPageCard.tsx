@@ -10,7 +10,7 @@ interface Props {
 
 export default function ProductAddPageCard({ condition, title, model, sku, price }: Props) {
     return (
-        <div className="flex flex-col gap-10 w-full bg-db-1 rounded-lg p-3 text-neutral-300 font-semibold">
+        <div className="flex flex-col gap-10 w-full bg-dbm rounded-lg p-3 text-neutral-300 font-semibold">
             <div className="flex flex-col gap-4">
                 <div className="leading-5">
                     <p className="text-neutral-500 ">{condition}</p>

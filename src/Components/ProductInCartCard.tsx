@@ -13,7 +13,7 @@ export default function ProductInCartCard({ img, title, price, quantity }: Props
     const darkerText = 'text-neutral-500 leading-4'
 
     return (
-        <div onMouseEnter={() => { setShowRemoveBtn(true) }} onMouseLeave={() => { setShowRemoveBtn(false) }} className="flex flex-col p-3 gap-3 rounded-lg bg-db-1 text-base text-neutral-300 font-semibold">
+        <div onMouseEnter={() => { setShowRemoveBtn(true) }} onMouseLeave={() => { setShowRemoveBtn(false) }} className="flex flex-col p-3 gap-3 rounded-lg bg-dbm text-base text-neutral-300 font-semibold">
             <div className="flex gap-5 w-full">
                 <div className="p-1 w-24 aspect-square bg-white rounded">
                     <div className="h-full w-full bg-contain bg-no-repeat bg-center bg-white" style={{ backgroundImage: `url(${img})` }} />

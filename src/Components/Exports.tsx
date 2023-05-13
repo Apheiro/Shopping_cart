@@ -5,17 +5,18 @@ import Footer from "./Footer";
 import ImagesProduct from "./ImagesProduct";
 import Navbar from "./Navbar";
 import Pagination from "./Pagination";
-import Presentation from "./Presentation";
 import ProductAddPageCard from "./ProductAddPageCard";
 import ProductInCartCard from "./ProductInCartCard";
 import ProductResultCard from "./ProductResultCard";
 import SideMenu from "./SideMenu";
 import ProductsCarousel from "./ProductsCarousel";
+import FilterForm from "./FilterForm";
+import SortForm from "./SortForm";
 
 export {
     Categories, Features, Start,
     Footer, ImagesProduct, Navbar,
-    Pagination, Presentation, ProductAddPageCard,
+    Pagination, ProductAddPageCard,
     ProductInCartCard, ProductResultCard,
-    SideMenu, ProductsCarousel
+    SideMenu, ProductsCarousel, FilterForm, SortForm
 };

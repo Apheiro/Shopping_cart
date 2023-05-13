@@ -6,7 +6,7 @@ interface Props {
     children: React.ReactNode,
     classNameCustom?: any,
     id?: any,
-    type?: string,
+    type?: 'submit' | 'button' | 'reset' | undefined,
     onClick?: (React.MouseEventHandler<HTMLElement> & React.MouseEventHandler<HTMLButtonElement>) | undefined,
 }
 
@@ -32,7 +32,9 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
         default:
     }
 
-    return <Component className={`${className} ${classNameCustom} `} {...props} />;
+    return (
+        <Component className={`${className} ${classNameCustom} `} type={asChild ? undefined : type} {...props} />
+    )
 }
 
 export default Btn

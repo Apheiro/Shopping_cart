@@ -33,7 +33,7 @@ export default function InfoCard({ title, description, variant, customClass }: P
                         <h2 className={titleStyle}>{title}</h2>
                         <Btn variant='cart' onClick={() => { setFoldCard(!foldCard); }}><IconChevronDown className={`${foldCard && 'rotate-180'} transition-transform`} /></Btn>
                     </div>
-                    {foldCard && <p className={descriptionStyle}>{description}</p>}
+                    {foldCard && <div className={`${descriptionStyle} flex flex-col gap-3`}>{description}</div>}
                 </>
             }
         </div>

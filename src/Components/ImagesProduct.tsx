@@ -53,9 +53,8 @@ export default function ImagesProduct({ imgs }: Props) {
         [ThumbnailPlugin(instanceRef)]
     )
 
-
-    const imageStyle = 'w-full aspect-square bg-dbm rounded-lg text-neutral-200'
-    const sliderStyle = ' w-full  bg-dbm rounded-lg text-neutral-200 p-2'
+    const imageStyle = 'w-full aspect-square bg-white rounded-lg text-neutral-200'
+    const sliderStyle = ' w-full  bg-white rounded-lg text-neutral-200 p-2'
     const bgStyle = 'w-full aspect-square bg-no-repeat bg-center bg-contain'
 
     return (

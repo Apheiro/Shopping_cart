@@ -1,6 +1,5 @@
-import { memo, useState } from 'react';
-import Navbar from '../Components/Navbar'
-import SideMenu from '../Components/SideMenu'
+import { useState } from 'react';
+import { Navbar, SideMenu } from '../Components/Exports'
 import Footer from '../Components/Footer';
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 }
 
 export default function Layout({ children }: Props) {
-  const [hidde, setHidde] = useState(true)
+  const [hidde, setHidde] = useState<boolean>(true)
 
   return (
     <div className="bg-db min-h-screen flex-col flex items-start ">
@@ -20,10 +19,13 @@ export default function Layout({ children }: Props) {
         <SideMenu hidde={hidde} setHidde={setHidde} />
       </div>
       <main className='w-full flex flex-col'>
-        {children}
+        <div className='flex flex-col gap-5 sm:gap-30'>
+          {children}
+        </div>
       </main>
       <Footer />
     </div>
+
   )
 }
 

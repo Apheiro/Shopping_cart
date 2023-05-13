@@ -3,7 +3,8 @@ interface Props {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     placeholder?: string,
     name?: string,
-    id?: string
+    id?: string,
+    defaultValue?: string | number
 }
 
 export default function Input({ variant, ...Props }: Props) {

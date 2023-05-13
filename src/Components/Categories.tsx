@@ -42,7 +42,6 @@ export default function Categories() {
         { svg: <IconDiscount {...svgProps} />, title: 'Clearance & More', link: '/test/test' },
     ]
 
-
     return (
         <div className='flex flex-col gap-3 h-100 w-full max-w-6xl sm:h-auto justify-center'>
             <h2 className=' font-bold text-lg sm:text-xl self-start'>Categories</h2>

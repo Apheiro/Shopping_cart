@@ -13,6 +13,7 @@ function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): 
                 slide.classList.remove("active")
             })
         }
+
         function addActive(idx: number) {
             slider.slides[idx].classList.add("active")
         }
@@ -47,7 +48,6 @@ export default function ImagesProduct({ imgs }: Props) {
             slides: {
                 perView: 5,
                 spacing: 20,
-                // origin: 'center'
             },
         },
         [ThumbnailPlugin(instanceRef)]

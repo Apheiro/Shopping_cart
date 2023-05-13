@@ -8,7 +8,6 @@ export default function SortForm({ ...props }: Props) {
     const location = useLocation();
     const navigate = useNavigate();
 
-
     function handleSubmit(e: React.ChangeEvent<HTMLSelectElement>) {
         const searchParams = new URLSearchParams(location.search);
         const sortValue = e.currentTarget.value;

@@ -16,7 +16,6 @@ interface Props {
 }
 
 export default function SideMenu({ products, hidde, setHidde }: Props) {
-
     function totalPrice() {
         if (products)
             return products.reduce((acc, product) => acc + product.price * product.quantity, 0)

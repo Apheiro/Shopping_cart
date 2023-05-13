@@ -21,7 +21,6 @@ export default function ProductAddPageCard({ condition, title, model, sku, price
                     <p><span className="text-neutral-500">SKU: </span>{sku}</p>
                 </div>
             </div>
-
             <div className="flex justify-between">
                 <div className="flex flex-col leading-5">
                     <p className="text-neutral-500 leading-5">Price</p>
@@ -29,7 +28,6 @@ export default function ProductAddPageCard({ condition, title, model, sku, price
                 </div>
                 <Btn variant='base'>Add to cart</Btn>
             </div>
-
         </div>
     )
 }

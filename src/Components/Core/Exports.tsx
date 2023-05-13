@@ -1,11 +1,11 @@
 import Btn from "./Btn";
 import CategoryBtn from "./CategoryBtn";
-import Checkbox from "./Checkbox";
+import Radios from "./Radios";
 import InfoCard from "./InfoCard";
 import Input from "./Input";
 import ProductCard from "./ProductCard";
 
 export {
-    Btn, CategoryBtn, Checkbox,
+    Btn, CategoryBtn, Radios,
     InfoCard, Input, ProductCard
 };

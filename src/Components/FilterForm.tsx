@@ -1,9 +1,15 @@
 import { Form, useLocation, useNavigate } from "react-router-dom";
-import { Checkbox, Input, Btn } from "./Core/Exports";
+import { Radios, Input, Btn } from "./Core/Exports";
+import { useState } from "react";
 
-export default function FilterForm() {
+interface Props {
+    defaultValue: { condition: string, min: string, max: string };
+}
+
+export default function FilterForm({ defaultValue }: Props) {
     const location = useLocation();
     const navigate = useNavigate()
+    const [radioSelected, setRadioSelected] = useState<string>(defaultValue.condition);
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -27,15 +33,25 @@ export default function FilterForm() {
             <h2 className="font-bold">Filters</h2>
             <div className="flex flex-col gap-2">
                 <h3 className="font-semibold color-neutral-5">Condition</h3>
-                <Checkbox name="co" Title='New' />
-                <Checkbox name="pocilga" Title='Pre-Owned' />
-                <Checkbox name="rf" Title='Refurbished' />
-                <Checkbox name="objetivo" Title='Open-box' />
+                <Radios
+                    name="condition"
+                    value="new"
+                    Title='New'
+                    radioSelected={radioSelected}
+                    setRadioSelected={setRadioSelected}
+                />
+                <Radios
+                    name="condition"
+                    value="refurbished"
+                    Title='Refurbished'
+                    radioSelected={radioSelected}
+                    setRadioSelected={setRadioSelected}
+                />
             </div>
             <div className="flex flex-col gap-2">
                 <h3 className="font-semibold color-neutral-5">Price range</h3>
                 <div className="flex justify-center items-center gap-3">
-                    <Input variant="price" placeholder="min" name="min" />-<Input variant="price" placeholder="max" name="max" />
+                    <Input variant="price" placeholder="min" name="min" defaultValue={defaultValue.min} />-<Input variant="price" placeholder="max" name="max" defaultValue={defaultValue.max} />
                 </div>
             </div>
             <Btn variant="base" type="submit">Apply</Btn>

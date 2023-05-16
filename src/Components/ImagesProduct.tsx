@@ -1,6 +1,6 @@
 import { MutableRefObject, useState, useEffect } from "react"
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react"
-import { useNavigation } from "react-router-dom"
+// import { useNavigation } from "react-router-dom"
 import "keen-slider/keen-slider.min.css"
 
 interface Props {
@@ -41,10 +41,26 @@ function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): 
     }
 }
 
+const MutationPlugin: KeenSliderPlugin = (slider) => {
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            slider.update()
+        })
+    })
+    const config = { childList: true }
+
+    slider.on("created", () => {
+        observer.observe(slider.container, config)
+    })
+    slider.on("destroyed", () => {
+        observer.disconnect()
+    })
+}
+
 export default function ImagesProduct({ imgs }: Props) {
     const [loaded, setLoaded] = useState<boolean>(false)
-    const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({ initial: 0, })
-    const isLoading = useNavigation().state === "loading"
+    const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({ initial: 0, }, [MutationPlugin])
+    // const isLoading = useNavigation().state === "loading"
     const [thumbnailRef] = useKeenSlider<HTMLDivElement>(
         {
             initial: 0,
@@ -53,16 +69,31 @@ export default function ImagesProduct({ imgs }: Props) {
                 spacing: 20,
             },
         },
-        [ThumbnailPlugin(instanceRef)]
+        [ThumbnailPlugin(instanceRef), MutationPlugin]
     )
+
+    function loadImage(img: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const imgLoad = new Image()
+            imgLoad.src = img
+            imgLoad.onload = () => { resolve(true) }
+            imgLoad.onerror = () => { reject(false) }
+        })
+    }
 
     useEffect(() => {
         setLoaded(false)
+        let imgsLoadedPromises: Promise<boolean>[] = []
+        imgs.forEach(img => imgsLoadedPromises.push(loadImage(img)))
+        Promise.all(imgsLoadedPromises).then(() => {
+            setLoaded(true)
+            console.log('all images are loaded')
+        })
     }, [imgs])
 
     const imageStyle = `w-full ${!loaded && 'animate-pulse'} aspect-square bg-white rounded-lg text-neutral-200`
     const sliderStyle = ` w-full ${!loaded && 'animate-pulse'} bg-white rounded-lg text-neutral-200 p-2`
-    const bgStyle = `h-full aspect-square flex justify-center items-center ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-800`
+    const bgStyle = `h-full aspect-square flex justify-center items-center ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`
 
     return (
         <div className="w-full aspect-square flex flex-col gap-4 ">
@@ -80,7 +111,9 @@ export default function ImagesProduct({ imgs }: Props) {
                 {
                     imgs.map((img, index) => (
                         <div className={`keen-slider__slide ${sliderStyle}`} key={`imgSliderThmb${index + 1}`}>
-                            <div className={bgStyle}> <img src={img} className="max-h-full max-w-full" onLoad={() => index + 1 === imgs.length && setLoaded(true)} /> </div>
+                            <div className={bgStyle}>
+                                <img src={img} className="max-h-full max-w-full" />
+                            </div>
                         </div>
                     ))
                 }

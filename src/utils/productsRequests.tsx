@@ -51,7 +51,8 @@ export interface ProductInfo {
     regularPrice: number,
     salePrice: number,
     sku: string,
-    orderable: 'Available' | 'SoldOut' | 'PreOrder'
+    orderable: 'Available' | 'SoldOut' | 'PreOrder',
+    quantityLimit: number
 }
 
 const urlProducts = "https://api.bestbuy.com/v1/products";
@@ -67,7 +68,7 @@ export async function getProductsList(reqParams: ReqParams) {
     const paramsBB = new URLSearchParams({
         format: "json",
         pageSize: '10',
-        show: "name,regularPrice,salePrice,sku,image,condition,modelNumber,orderable",
+        show: "name,regularPrice,salePrice,sku,image,condition,modelNumber,orderable,quantityLimit",
         page: reqParams.pg,
         sort: reqParams.sr === 'bm' || !reqParams.sr ? '' : reqParams.sr,
         apiKey: API_KEY,
@@ -88,7 +89,7 @@ export async function getProductsList(reqParams: ReqParams) {
 
 export async function getProduct(sku: string) {
     const paramsBB = new URLSearchParams({
-        show: "name,regularPrice,salePrice,longDescription,description,plot,features,details,sku,images,image,condition,modelNumber,orderable",
+        show: "name,regularPrice,salePrice,longDescription,description,plot,features,details,sku,images,image,condition,modelNumber,orderable,quantityLimit",
         apiKey: API_KEY
     })
 
@@ -110,7 +111,8 @@ export async function getProduct(sku: string) {
                 regularPrice: data.regularPrice,
                 salePrice: data.salePrice,
                 sku: data.sku,
-                orderable: data.orderable
+                orderable: data.orderable,
+                quantityLimit: data.quantityLimit
             }
             return productData
         })

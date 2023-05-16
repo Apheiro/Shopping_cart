@@ -2,19 +2,22 @@ import Btn from "./Core/Btn";
 import Input from "./Core/Input";
 import { useState } from 'react'
 import { useLocation, useSubmit, Link } from "react-router-dom"
+import { IconAlertTriangle } from '@tabler/icons-react'
 import useDebounceFn from '../hooks/useDebounceFn'
 interface Props {
     img: string,
     title: string,
     price: number,
     quantity: number,
+    quantityLimit: number,
     sku: number,
     hidde: boolean,
     setHidde: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ProductInCartCard({ img, title, price, quantity, sku, hidde, setHidde }: Props) {
+export default function ProductInCartCard({ img, title, price, quantity, quantityLimit, hidde, sku, setHidde }: Props) {
     const [disabledBtn, setDisabledBtn] = useState(false)
+    const [overLimit, setOverLimit] = useState(false)
     const [showRemoveBtn, setShowRemoveBtn] = useState(false)
     const location = useLocation()
     const submit = useSubmit()
@@ -34,6 +37,21 @@ export default function ProductInCartCard({ img, title, price, quantity, sku, hi
         return formData
     }
 
+    function changeQuantity(e: React.ChangeEvent<HTMLInputElement>) {
+        if (parseInt(e.currentTarget.value) > quantityLimit) { setOverLimit(true) }
+        else {
+            setOverLimit(false)
+            const formData = createFormData('change', `${location.pathname}${location.search}`, sku, e.currentTarget.value)
+            submitDebounced(formData, { method: 'POST' })
+        }
+    }
+
+    function deleteItemFromCart() {
+        const formData = createFormData('remove', `${location.pathname}${location.search}`, sku)
+        setDisabledBtn(true)
+        submit(formData, { method: 'POST' })
+    }
+
     return (
         <div onMouseEnter={() => { setShowRemoveBtn(true) }} onMouseLeave={() => { setShowRemoveBtn(false) }} className="flex flex-col p-3 gap-3 rounded-lg bg-dbm text-base text-neutral-300 font-semibold">
             <div className="flex gap-5 w-full">
@@ -44,46 +62,27 @@ export default function ProductInCartCard({ img, title, price, quantity, sku, hi
                 <div className="w-full grid grid-cols-2 grid-rows-[1fr_auto] flex-col justify-between gap-3">
                     <h2 className="leading-5 font-semibold line-clamp-2 col-start-1 col-end-3">{title}</h2>
                     <p className="leading-4 self-center justify-self-start"><span className={darkerText}>Price: </span>${price}</p>
-                    <div className="flex gap-2 items-center w-30 justify-self-end">
-                        <p className={darkerText}>Quantity:</p>
-                        <Input
-                            variant="quantity"
-                            name="quantity"
-                            defaultValue={quantity}
-                            onChange={(e) => {
-                                const formData = createFormData('change', `${location.pathname}${location.search}`, sku, e.currentTarget.value)
-                                submitDebounced(formData, { method: 'POST' })
-                            }}
-                        />
+                    <div className="flex gap-2 items-center justify-self-end">
+                        <div className={`flex items-center gap-1 ${overLimit && '!text-amber-4'}`}>
+                            {overLimit && <IconAlertTriangle height={15} width={15} />}
+                            <p className={`${darkerText} ${overLimit && '!text-amber-4'}`}>Quantity:</p>
+                        </div>
+                        <Input variant="quantity" name="quantity" defaultValue={quantity} onChange={changeQuantity} />
                     </div>
                 </div>
             </div>
             {showRemoveBtn &&
                 <div className="flex flex-wrap gap-2 items-center justify-between">
                     <div className="flex gap-2">
-                        <Btn variant='removeCart' disabled={disabledBtn}
-                            onClick={() => {
-                                const formData = createFormData('remove', `${location.pathname}${location.search}`, sku)
-                                setDisabledBtn(true)
-                                submit(formData, { method: 'POST' })
-                            }}
-                        >
-                            Remove
-                        </Btn>
+                        <Btn variant='removeCart' disabled={disabledBtn} onClick={deleteItemFromCart}>Remove</Btn>
                         <Btn asChild variant="base" onClick={() => { setHidde(!hidde) }}>
-                            <Link to={`/product/${sku}`}>
-                                Go to product page
-                            </Link>
+                            <Link to={`/product/${sku}`}>Go to product page</Link>
                         </Btn>
                     </div>
-
-
                     <div>
                         <p className="text-lg" ><span className={darkerText}>Total: </span>${price * quantity}</p>
                     </div>
                 </div>
-
-
             }
         </div>
 

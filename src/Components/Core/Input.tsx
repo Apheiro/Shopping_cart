@@ -7,10 +7,9 @@ interface Props {
     defaultValue?: string | number
 }
 
-export default function Input({ variant, ...Props }: Props) {
+function Input({ variant, ...Props }: Props) {
     const focusStyle: string = 'text-neutral-300 text-opacity-50 focus:text-opacity-100 transition-colors duration-500'
     const removeInputBtn: string = '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
-
     return (
         <>
             {
@@ -49,3 +48,5 @@ export default function Input({ variant, ...Props }: Props) {
 
     )
 }
+
+export default Input

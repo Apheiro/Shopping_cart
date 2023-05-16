@@ -23,14 +23,15 @@ export default function SideMenu({ hidde, setHidde }: Props) {
                 <Btn variant="cart" onClick={() => { setHidde(!hidde) }}><IconChevronLeft />My cart</Btn>
                 <p className="font-bold "></p>
             </div>
-            <div className="scrollbar flex flex-col px-3 pb-10 gap-3 h-full scrollbar-thin scrollbar-thumb-[#ffffff21] scrollbar-thumb-rounded-lg overflow-x-auto">
+            <div className="scrollbar flex flex-col px-3 pb-10 gap-3 h-full overflow-x-auto">
                 {
-                    products.map(({ images, name, salePrice, quantity, sku }) =>
+                    products.map(({ images, name, salePrice, quantity, quantityLimit, sku }) =>
                         <ProductInCartCard key={`productsInCart-${crypto.randomUUID()}`}
                             img={images}
                             title={name}
                             price={parseInt(salePrice)}
                             quantity={parseInt(quantity)}
+                            quantityLimit={parseInt(quantityLimit)}
                             sku={parseInt(sku)}
                             hidde={hidde}
                             setHidde={setHidde}

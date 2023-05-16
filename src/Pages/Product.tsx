@@ -59,19 +59,20 @@ export default function Product() {
         setDisabledBtn(isProductInCart)
     }, [isProductInCart])
 
-    function createFormData(name: string, salePrice: number, image: string, sku: string, quantity: number) {
+    function createFormData(name: string, salePrice: number, image: string, sku: string, quantity: number, quantityLimit: number): FormData {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('salePrice', salePrice.toString())
         formData.append('images', image)
         formData.append('sku', sku.toString())
         formData.append('quantity', quantity.toString())
+        formData.append('quantityLimit', quantityLimit.toString())
         return formData
     }
 
     function handleSubmit(event: React.MouseEvent<HTMLElement, MouseEvent>) {
         setDisabledBtn(true)
-        const formData = createFormData(product.name, product.salePrice, product.image, product.sku, 1)
+        const formData = createFormData(product.name, product.salePrice, product.image, product.sku, 1, product.quantityLimit)
         submit(formData, { method: 'POST' })
     }
 
@@ -93,7 +94,10 @@ export default function Product() {
                 <ImagesProduct imgs={images(product.images, product.image)} />
                 <div className="flex flex-col gap-4 text-neutral-3">
                     <div className="flex flex-col gap-4 bg-dbm p-3 rounded-lg">
-                        <p className="font-semibold text-neutral-5">{product.condition}</p>
+                        <div className="flex justify-between">
+                            <p className="font-semibold text-neutral-5">{product.condition}</p>
+                            {product.quantityLimit === 1 && <p className="color-amber-4 border-amber-4 border-1 rounded-md px-1">Only one per customer</p>}
+                        </div>
                         <h1 className="font-bold text-xl">{product.name}</h1>
                         <div className="flex justify-between">
                             <p><span className="text-neutral-5 font-bold">Model:</span> {product.model}</p>

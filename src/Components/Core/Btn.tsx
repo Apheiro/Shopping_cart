@@ -8,6 +8,7 @@ interface Props {
     id?: any,
     type?: 'submit' | 'button' | 'reset' | undefined,
     onClick?: (React.MouseEventHandler<HTMLElement> & React.MouseEventHandler<HTMLButtonElement>) | undefined,
+    disabled?: boolean
 }
 
 function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: Props) {

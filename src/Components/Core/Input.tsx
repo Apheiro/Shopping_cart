@@ -39,7 +39,8 @@ export default function Input({ variant, ...Props }: Props) {
                 <label htmlFor="" className={`flex gap-2 bg-db rounded-lg p-1 font-semibold`}>
                     <input
                         type="number"
-                        className={`bg-transparent outline-none w-14 ${focusStyle} ${removeInputBtn}`}
+                        max={999}
+                        className={`bg-transparent outline-none w-7 ${focusStyle} ${removeInputBtn}`}
                         {...Props}
                     />
                 </label>

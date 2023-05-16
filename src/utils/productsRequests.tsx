@@ -51,7 +51,7 @@ export interface ProductInfo {
     regularPrice: number,
     salePrice: number,
     sku: string,
-    orderable: 'Available' | 'SoldOut'
+    orderable: 'Available' | 'SoldOut' | 'PreOrder'
 }
 
 const urlProducts = "https://api.bestbuy.com/v1/products";
@@ -91,8 +91,8 @@ export async function getProduct(sku: string) {
         show: "name,regularPrice,salePrice,longDescription,description,plot,features,details,sku,images,image,condition,modelNumber,orderable",
         apiKey: API_KEY
     })
-    console.log('request from product component')
 
+    console.log('request from product component')
     return fetch(`${urlProducts}/${sku}.json?${paramsBB.toString()}`, { mode: 'cors' })
         .then((response) => response.json())
         .then((data) => {

@@ -40,7 +40,18 @@ export default function SideMenu({ hidde, setHidde }: Props) {
             </div>
             <div className="bg-dbm flex justify-between items-start p-3 gap-5">
                 <p className="font-bold">Total: ${totalPrice()}</p>
-                <Btn variant="pay" >Go to pay</Btn>
+                {
+                    products.length > 0 ?
+                        <Btn asChild variant="pay">
+                            <a href={`https://api.bestbuy.com/click/-/${products.map(({ sku }) => sku).join(',')}/cart`} >
+                                Go to pay
+                            </a>
+                        </Btn> :
+                        <Btn variant="pay" classNameCustom='!bg-db !cursor-unset'>
+                            Add products
+                        </Btn>
+                }
+
             </div>
         </div>
     )

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Btn from "./Core/Btn"
 import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react"
+import useDebounceFn from '../hooks/useDebounceFn'
 
 interface Props {
     totalPages: number,
@@ -9,24 +10,27 @@ interface Props {
     defaultIndex: number
 }
 
+
 export default function Pagination({ totalPages, customClass, defaultIndex }: Props) {
     const [indexSelected, setIndexSelected] = useState(defaultIndex)
     const [indexPages, setIndexPages] = useState<number[]>([1, 2, 3])
     const location = useLocation()
     const navigate = useNavigate()
+    const changePageUrlDebounce = useDebounceFn(changePageUrl, 800)
 
-    function changePageUrl(index: number) {
-        setIndexSelected(index)
+    function changePageUrl() {
         const searchParams = new URLSearchParams(location.search);
-        searchParams.set('pg', index.toString())
+        searchParams.set('pg', indexSelected.toString())
         navigate(`/search?${searchParams.toString()}`)
     }
 
     function changeIndexPage(e: React.MouseEvent<HTMLButtonElement>) {
         if (e.currentTarget.id === 'next' && indexSelected !== totalPages) {
-            changePageUrl(indexSelected + 1)
+            setIndexSelected(indexSelected + 1)
+            changePageUrlDebounce()
         } else if (e.currentTarget.id === 'previous' && indexSelected !== 1) {
-            changePageUrl(indexSelected - 1)
+            setIndexSelected(indexSelected - 1)
+            changePageUrlDebounce()
         }
     }
 
@@ -45,18 +49,17 @@ export default function Pagination({ totalPages, customClass, defaultIndex }: Pr
     }
 
     useEffect(() => {
-        setIndexSelected(defaultIndex)
         setIndexPages(indexPagesFn())
-    }, [defaultIndex, indexSelected])
+    }, [indexSelected])
 
     return (
-        <div className={`${customClass} flex gap-2 items-center `}>
+        <div className={`${customClass} flex justify-between w-full max-w-sm items-center self-center justify-self-center`}>
             <Btn variant="base" id='previous' onClick={changeIndexPage} classNameCustom="!p-1"><IconChevronLeft /></Btn>
             {
                 !indexPages.includes(1) &&
                 <Btn
                     variant='cart'
-                    onClick={() => { changePageUrl(1) }}
+                    onClick={() => { setIndexSelected(1), changePageUrlDebounce() }}
                 >
                     1...
                 </Btn>
@@ -66,7 +69,7 @@ export default function Pagination({ totalPages, customClass, defaultIndex }: Pr
                     <Btn
                         variant="cart"
                         key={index}
-                        onClick={() => { changePageUrl(index) }}
+                        onClick={() => { setIndexSelected(index), changePageUrlDebounce() }}
                         classNameCustom={`${indexSelected === index && '!bg-dbl !opacity-100'} text-sm`}
                     >
                         {index}
@@ -77,7 +80,7 @@ export default function Pagination({ totalPages, customClass, defaultIndex }: Pr
                 !indexPages.includes(totalPages) &&
                 <Btn
                     variant='cart'
-                    onClick={() => { changePageUrl(totalPages) }}
+                    onClick={() => { setIndexSelected(totalPages), changePageUrlDebounce() }}
                 >
                     ...{`${totalPages}`}
                 </Btn>}

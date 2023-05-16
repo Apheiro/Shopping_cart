@@ -1,24 +1,20 @@
+import { ReqParams } from "../utils/productsRequests"
 import Btn from "./Core/Btn"
 import ProductInCartCard from "./ProductInCartCard"
 import { IconChevronLeft } from "@tabler/icons-react"
-
-type Product = {
-    img: string,
-    title: string,
-    price: number,
-    quantity: number
-}
+import { useLoaderData } from "react-router-dom"
 
 interface Props {
-    products?: Product[],
     hidde: boolean,
     setHidde: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export default function SideMenu({ products, hidde, setHidde }: Props) {
+export default function SideMenu({ hidde, setHidde }: Props) {
+    const { products } = useLoaderData() as { products: ReqParams[] }
+
     function totalPrice() {
         if (products)
-            return products.reduce((acc, product) => acc + product.price * product.quantity, 0)
+            return products.reduce((acc, product) => acc + parseInt(product.salePrice) * parseInt(product.quantity), 0)
     }
 
     return (
@@ -27,17 +23,24 @@ export default function SideMenu({ products, hidde, setHidde }: Props) {
                 <Btn variant="cart" onClick={() => { setHidde(!hidde) }}><IconChevronLeft />My cart</Btn>
                 <p className="font-bold "></p>
             </div>
-            <div className="flex flex-col px-3 pb-10 gap-3 h-full scrollbar-thin scrollbar-thumb-[#ffffff21] scrollbar-thumb-rounded-lg overflow-x-auto">
+            <div className="scrollbar flex flex-col px-3 pb-10 gap-3 h-full scrollbar-thin scrollbar-thumb-[#ffffff21] scrollbar-thumb-rounded-lg overflow-x-auto">
                 {
-                    products &&
-                    products.map(({ img, title, price, quantity }) =>
-                        <ProductInCartCard img={img} title={title} price={price} quantity={quantity} />
+                    products.map(({ images, name, salePrice, quantity, sku }) =>
+                        <ProductInCartCard key={`productsInCart-${crypto.randomUUID()}`}
+                            img={images}
+                            title={name}
+                            price={parseInt(salePrice)}
+                            quantity={parseInt(quantity)}
+                            sku={parseInt(sku)}
+                            hidde={hidde}
+                            setHidde={setHidde}
+                        />
                     )
                 }
             </div>
             <div className="bg-dbm flex justify-between items-start p-3 gap-5">
                 <p className="font-bold">Total: ${totalPrice()}</p>
-                <Btn variant="pay">Go to pay</Btn>
+                <Btn variant="pay" >Go to pay</Btn>
             </div>
         </div>
     )

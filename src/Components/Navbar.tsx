@@ -1,9 +1,8 @@
-import { Link, Form } from 'react-router-dom';
 import { useState } from 'react';
 import { Btn, Input } from './Core/Exports';
 import { IconSearch, IconShoppingCart } from '@tabler/icons-react';
 import useMinScroll from '../hooks/useMinScroll';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 interface Props {
     hiddeFn: () => void
@@ -14,6 +13,7 @@ const Navbar = ({ hiddeFn }: Props) => {
     const [handleInput, setHandleInput] = useState<string>('')
     const navigate = useNavigate();
     const location = useLocation()
+
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const searchParams: URLSearchParams = new URLSearchParams(location.search);
@@ -23,7 +23,6 @@ const Navbar = ({ hiddeFn }: Props) => {
         const newSearchParams = new URLSearchParams(params.join('&'));
         if (handleInput) { navigate(`/search?q=${handleInput}&pg=1&${newSearchParams.toString()}`) }
     }
-
     return (
         <nav className={`${scroll ? 'bg-[#31343c]' : 'bg-db'} flex justify-between transition-colors  bg-opacity-20 backdrop-blur-lg max-w-5xl w-full mx-auto rounded-lg p-2 gap-2 transition-duration-500`}>
             <Btn asChild variant='base' classNameCustom={'!bg-opacity-100 min-w-9 flex items-center justify-center !aspect-square !p-0 hover:(filter brightness-120) '}>
@@ -50,7 +49,9 @@ const Navbar = ({ hiddeFn }: Props) => {
                 </Btn>
             </form>
 
-            <Btn onClick={hiddeFn} variant='cart'><IconShoppingCart size={20} /></Btn>
+            <Btn onClick={hiddeFn} variant='cart'>
+                <IconShoppingCart size={20} />
+            </Btn>
         </nav>
     )
 }

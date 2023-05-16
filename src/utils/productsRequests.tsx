@@ -6,7 +6,9 @@ interface Products {
     name: string,
     modelNumber: string,
     sku: number | string,
-    salePrice: number
+    salePrice: number,
+    regularPrice: number,
+    orderable: 'Available' | 'SoldOut' | 'PreOrder'
 }
 
 export interface SearchResult {
@@ -40,12 +42,16 @@ export interface ProductInfo {
     details: Details[],
     features: Features[],
     images: Images[],
+    image: string,
+    longDescription: string,
     description: string,
+    plot: string,
     model: string,
     name: string,
     regularPrice: number,
     salePrice: number,
-    sku: string
+    sku: string,
+    orderable: 'Available' | 'SoldOut'
 }
 
 const urlProducts = "https://api.bestbuy.com/v1/products";
@@ -61,7 +67,7 @@ export async function getProductsList(reqParams: ReqParams) {
     const paramsBB = new URLSearchParams({
         format: "json",
         pageSize: '10',
-        show: "name,regularPrice,salePrice,sku,image,condition,modelNumber",
+        show: "name,regularPrice,salePrice,sku,image,condition,modelNumber,orderable",
         page: reqParams.pg,
         sort: reqParams.sr === 'bm' || !reqParams.sr ? '' : reqParams.sr,
         apiKey: API_KEY,
@@ -82,7 +88,7 @@ export async function getProductsList(reqParams: ReqParams) {
 
 export async function getProduct(sku: string) {
     const paramsBB = new URLSearchParams({
-        show: "name,regularPrice,longDescription,features,details,salePrice,sku,images,condition,modelNumber",
+        show: "name,regularPrice,salePrice,longDescription,description,plot,features,details,sku,images,image,condition,modelNumber,orderable",
         apiKey: API_KEY
     })
     console.log('request from product component')
@@ -95,14 +101,44 @@ export async function getProduct(sku: string) {
                 details: data.details,
                 features: data.features,
                 images: data.images,
-                description: data.longDescription,
+                image: data.image,
+                longDescription: data.longDescription,
+                description: data.description,
+                plot: data.plot,
                 model: data.modelNumber,
                 name: data.name,
                 regularPrice: data.regularPrice,
                 salePrice: data.salePrice,
-                sku: data.sku
+                sku: data.sku,
+                orderable: data.orderable
             }
             return productData
         })
-        .catch((error) => console.error(error));
+}
+
+export async function getCartProducts() {
+    const products: ReqParams[] = await JSON.parse(localStorage.getItem('Products') ?? '[]')
+    return products
+}
+
+export async function addToCart(product: ReqParams) {
+    let Products = await getCartProducts()
+    Products.push(product)
+    localStorage.setItem('Products', JSON.stringify(Products))
+}
+
+export async function removeFromCart(product: number) {
+    let Products = await getCartProducts()
+    const productsku = product.toString()
+    const index = Products.findIndex(p => p.sku == productsku)
+    Products.splice(index, 1)
+    localStorage.setItem('Products', JSON.stringify(Products))
+}
+
+export async function editCart(product: number, quantity: number) {
+    let Products = await getCartProducts()
+    const productsku = product.toString()
+    const index = Products.findIndex(p => p.sku == productsku)
+    Products[index].quantity = `${quantity}`
+    localStorage.setItem('Products', JSON.stringify(Products))
 }

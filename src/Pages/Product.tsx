@@ -1,40 +1,10 @@
-import { ImagesProduct } from "../Components/Exports"
-import { InfoCard, Btn } from "../Components/Core/Exports"
+import { addToCart, ReqParams, getCartProducts, getProduct, ProductInfo } from "../utils/productsRequests"
 import { LoaderFunctionArgs, useLoaderData, ActionFunctionArgs, useSubmit } from "react-router-dom"
-import { getProduct, Details, Features, Images, ProductInfo } from "../utils/productsRequests"
-import { addToCart, ReqParams, getCartProducts } from "../utils/productsRequests"
+import { details, features, images, description } from "../utils/dataFormatter"
+import { Btn } from "../Components/Core/Exports"
+import { ImagesProduct, StaticInfoCard, FoldingInfoCard } from "../Components/Exports"
 import { useState, useEffect } from "react"
-
-function details(detailsObj: Details[]): JSX.Element {
-    return (
-        <>
-            {
-                detailsObj.map((detail, index) => <p key={`detail-${index}`} ><span className="font-bold">{detail.name}:</span> {detail.value}</p>)
-            }
-        </>
-    )
-}
-
-function features(featuresObj: Features[]): JSX.Element {
-    if (featuresObj.length === 0) { return <>This product doesn't have any features</> }
-    return (
-        <>
-            {featuresObj.map((feature, index) => <p key={`feature-${index}`} >{feature.feature}</p>)}
-        </>
-    )
-}
-
-function images(imgObj: Images[], img: string): string[] {
-    const images: string[] = imgObj.filter(img => img.rel.includes("Zoom")).map(img => img.href)
-    if (images.length === 0) { return [img] }
-    return images
-}
-
-function description(desc: string, longDesc: string, plot: string): string {
-    if (longDesc !== null) { return longDesc }
-    else if (desc !== null) { return desc }
-    else { return plot }
-}
+import { AnimatePresence, motion } from "framer-motion"
 
 export async function loader(paramsLoader: LoaderFunctionArgs) {
     const product = await getProduct(paramsLoader.params.sku ?? '')
@@ -48,6 +18,19 @@ export async function action(paramsAction: ActionFunctionArgs) {
     formData.forEach((value, key) => product[key] = value.toString())
     addToCart(product)
     return { product }
+}
+
+const productAnimation = {
+    initial: {
+        opacity: 0,
+        scale: 0.9,
+        transition: { scale: { type: 'spring', bounce: 0.5 }, opacity: { duration: 0.8 } }
+    },
+    animate: {
+        opacity: 1,
+        scale: 1,
+        transition: { scale: { type: 'spring', bounce: 0.5 }, opacity: { duration: 0.8 } }
+    }
 }
 
 export default function Product() {
@@ -87,35 +70,53 @@ export default function Product() {
         }
     }
 
-    // console.log(product)
     return (
-        <section className="min-h-screen w-full p-4 py-21">
+        <motion.section
+            className="min-h-screen w-full p-4 py-21"
+            initial={'initial'}
+            animate={'animate'}
+            variants={productAnimation}
+            transition={{ type: 'spring', stiffness: 100, damping: 2 }}
+        >
             <div className=" flex flex-col gap-4 md:( grid grid-cols-2 grid-rows-[1fr_auto]  max-w-5xl mx-auto )  ">
-                <ImagesProduct imgs={images(product.images, product.image)} />
-                <div className="flex flex-col gap-4 text-neutral-3">
-                    <div className="flex flex-col gap-4 bg-dbm p-3 rounded-lg">
-                        <div className="flex justify-between">
-                            <p className="font-semibold text-neutral-5">{product.condition}</p>
-                            {product.quantityLimit === 1 && <p className="color-amber-4 border-amber-4 border-1 rounded-md px-1">Only one per customer</p>}
-                        </div>
-                        <h1 className="font-bold text-xl">{product.name}</h1>
-                        <div className="flex justify-between">
-                            <p><span className="text-neutral-5 font-bold">Model:</span> {product.model}</p>
-                            <p><span className="text-neutral-5 font-bold">SKU:</span> {product.sku}</p>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <p className="text-neutral-5 font-bold">Price</p>
-                                <h2 className="text-xl">${product.salePrice} {product.salePrice < product.regularPrice && <span className="line-through decoration-neutral-5 decoration-2 text-neutral-5"> {product.regularPrice}</span>}</h2>
+                <AnimatePresence mode='wait'>
+                    <ImagesProduct
+                        key={`${product.sku}-ProductInfoImages`}
+                        imgs={images(product.images, product.image)}
+                    />
+                </AnimatePresence>
+                <AnimatePresence mode='wait'>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        key={`${product.sku}-ProductInfo`}
+                        className="flex flex-col gap-4 text-neutral-3"
+                    >
+                        <div className="flex flex-col gap-4 bg-dbm p-3 rounded-lg">
+                            <div className="flex justify-between">
+                                <p className="font-semibold text-neutral-5">{product.condition}</p>
+                                {product.quantityLimit === 1 && <p className="color-amber-4 border-amber-4 border-1 rounded-md px-1">Only one per customer</p>}
                             </div>
-                            {buttonState(product.orderable)}
+                            <h1 className="font-bold text-xl">{product.name}</h1>
+                            <div className="flex justify-between">
+                                <p><span className="text-neutral-5 font-bold">Model:</span> {product.model}</p>
+                                <p><span className="text-neutral-5 font-bold">SKU:</span> {product.sku}</p>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <p className="text-neutral-5 font-bold">Price</p>
+                                    <h2 className="text-xl">${product.salePrice} {product.salePrice < product.regularPrice && <span className="line-through decoration-neutral-5 decoration-2 text-neutral-5"> {product.regularPrice}</span>}</h2>
+                                </div>
+                                {buttonState(product.orderable)}
+                            </div>
                         </div>
-                    </div>
-                    <InfoCard variant="static" title="Description" description={description(product.description, product.longDescription, product.plot)} />
-                </div>
-                <InfoCard variant="folding" title="Features" description={features(product.features)} />
-                <InfoCard variant="folding" title="Details" description={details(product.details)} />
+                        <StaticInfoCard title="Description" description={description(product.description, product.longDescription, product.plot)} />
+                    </motion.div>
+                </AnimatePresence>
+                <FoldingInfoCard title="Features" description={features(product.features)} />
+                <FoldingInfoCard title="Details" description={details(product.details)} />
             </div>
-        </section>
+        </motion.section>
     )
 }

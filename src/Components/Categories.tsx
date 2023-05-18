@@ -1,4 +1,4 @@
-import CategoryBtn from './Core/CategoryBtn'
+import { CategoryBtn } from './Core/Exports'
 import { useMediaQuery } from '@mantine/hooks';
 import {
     IconDeviceTv, IconDeviceLaptop,
@@ -13,7 +13,7 @@ import {
 } from '@tabler/icons-react'
 type Category = { svg: React.ReactNode, title: string, link?: string }[]
 
-export default function Categories() {
+function Categories() {
     const wide = useMediaQuery('(max-width: 935px)')
 
     const svgProps: { stroke: number, size: number } = {
@@ -56,3 +56,5 @@ export default function Categories() {
         </div>
     )
 }
+
+export { Categories }

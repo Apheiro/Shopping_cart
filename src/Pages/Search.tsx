@@ -3,55 +3,116 @@ import { getProductsList, ReqParams, SearchResult } from '../utils/productsReque
 import { useLoaderData, LoaderFunctionArgs } from "react-router-dom";
 import { IconFilter } from '@tabler/icons-react'
 import { Btn } from "../Components/Core/Exports"
-import { useMediaQuery } from "@mantine/hooks"
 import { useState } from "react"
+import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
-export async function loader(paramsLoader: LoaderFunctionArgs) {
-    const actualURL = new URL(paramsLoader.request.url);
-    let reqParams: ReqParams = {}
-    actualURL.searchParams.forEach((value, key) => { reqParams[key] = value });
-    const searchResult = await getProductsList(reqParams)
-    console.log('loader of search')
-    return { searchResult, reqParams }
+export async function loader(args: LoaderFunctionArgs) {
+    const url = new URL(args.request.url);
+    const params: ReqParams = {};
+    url.searchParams.forEach((value, key) => { params[key] = value; });
+    const result = await getProductsList(params);
+    return { searchResult: result, reqParams: params };
+}
+
+const searchAnimation = {
+    initial: {
+        opacity: 0,
+        scale: 0.96,
+        transition: {
+            scale: {
+                type: 'spring',
+                bounce: 0.5
+            },
+            opacity: { duration: 0.8 }
+        }
+    },
+    animate: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            scale: {
+                type: 'spring',
+                bounce: 0.5
+            },
+            opacity: { duration: 0.8 }
+        }
+    }
 }
 
 export default function Search() {
-    const { searchResult, reqParams } = useLoaderData() as { searchResult: SearchResult, reqParams: ReqParams };
-    const [hiddeFilters, setHiddeFilters] = useState(false);
-    const isMobile = useMediaQuery('(max-width: 768px)');
-    const prodNotFound = searchResult.products.length === 0
+    const { searchResult, reqParams } = useLoaderData() as {
+        searchResult: SearchResult;
+        reqParams: ReqParams;
+    };
+    const [isFilterHidden, setIsFilterHidden] = useState(false);
+    const noProductsFound = searchResult.products.length === 0;
+
+    const toggleFilter = () => setIsFilterHidden(!isFilterHidden);
 
     return (
-        <section className="min-h-screen flex justify-center p-4 py-30">
-            <div className={`${isMobile ? 'flex flex-col' : 'grid'} ${hiddeFilters ? 'flex flex-col' : 'grid-cols-[auto_1fr] grid-rows-[auto_1fr]'} gap-4 w-full max-w-5xl`}>
-                <div className="bg-dbm h-fit p-3 rounded-lg flex flex-wrap gap-4 justify-center sm:justify-between items-center">
+        <motion.section
+            className="min-h-screen flex justify-center p-4 py-30"
+            initial={'initial'}
+            animate={'animate'}
+            variants={searchAnimation}
+        >
+            <div className="flex flex-col md:(grid grid-cols-[auto_1fr]) gap-4 w-full max-w-5xl">
+                <div className="bg-dbm h-fit p-3 rounded-lg col-start-2 col-end-3 flex flex-wrap gap-4 justify-center sm:justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <Btn variant='cart' onClick={() => setHiddeFilters(!hiddeFilters)}><IconFilter size={20} /></Btn>
+                        <Btn variant="cart" onClick={toggleFilter}>
+                            <IconFilter size={20} />
+                        </Btn>
                         Result {searchResult.total} items
                     </div>
                     <SortForm defaultValue={reqParams.sr} />
                 </div>
-                {!hiddeFilters && <FilterForm defaultValue={{ condition: reqParams.condition, min: reqParams.min, max: reqParams.max }} />}
-                <div className={`flex ${prodNotFound && 'justify-center items-center'} flex-col gap-4 col-start-2 col-end-3 h-full`}>
-                    {prodNotFound && <h1 className='text-2xl font-bold text-neutral-5'>Not products found</h1>}
+                <AnimatePresence>
                     {
-                        searchResult.products.map(({ image, condition, name, modelNumber, sku, salePrice, regularPrice, orderable }, index) =>
-                            <ProductResultCard
-                                key={`productSearchResult-${index}`}
-                                img={image}
-                                condition={condition}
-                                title={name}
-                                model={modelNumber}
-                                sku={sku}
-                                price={salePrice}
-                                oldPrice={regularPrice}
-                                orderable={orderable}
-                            />
-                        )
+                        !isFilterHidden &&
+                        <FilterForm
+                            defaultValue={{
+                                condition: reqParams.condition,
+                                min: reqParams.min,
+                                max: reqParams.max,
+                            }}
+                        />
+
                     }
+                </AnimatePresence>
+                <div className={`flex ${noProductsFound && 'justify-center items-center'} flex-col gap-4 col-start-2 col-end-3 h-full`}>
+                    <AnimatePresence mode="wait">
+                        {
+                            noProductsFound &&
+                            <h1 className="text-2xl font-bold text-neutral-5"> No products found</h1>
+                        }
+                        {
+                            searchResult.products.map(
+                                ({ image, condition, name, modelNumber, sku, salePrice, regularPrice, orderable }) =>
+                                    <ProductResultCard
+                                        key={`productSearchResult-${sku}`}
+                                        img={image}
+                                        condition={condition}
+                                        title={name}
+                                        model={modelNumber}
+                                        sku={sku}
+                                        price={salePrice}
+                                        oldPrice={regularPrice}
+                                        orderable={orderable}
+                                    />
+                            )
+                        }
+                    </AnimatePresence>
                 </div>
-                {searchResult && searchResult.totalPages > 1 && <Pagination defaultIndex={searchResult.currentPage} totalPages={searchResult.totalPages} customClass="col-start-2 col-end-3 justify-self-end self-end" />}
+                {
+                    searchResult && searchResult.totalPages > 1 &&
+                    <Pagination
+                        defaultIndex={searchResult.currentPage}
+                        totalPages={searchResult.totalPages}
+                        customClass="col-start-2 col-end-3 justify-self-end self-end"
+                    />
+                }
             </div>
-        </section>
-    )
+        </motion.section>
+    );
 }

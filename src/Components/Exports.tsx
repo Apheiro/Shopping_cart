@@ -1,21 +1,15 @@
-import Categories from "./Categories";
-import Features from "./Features";
-import Footer from "./Footer";
-import ImagesProduct from "./ImagesProduct";
-import Navbar from "./Navbar";
-import Pagination from "./Pagination";
-import ProductAddPageCard from "./ProductAddPageCard";
-import ProductInCartCard from "./ProductInCartCard";
-import ProductResultCard from "./ProductResultCard";
-import SideMenu from "./SideMenu";
-import ProductsCarousel from "./ProductsCarousel";
-import FilterForm from "./FilterForm";
-import SortForm from "./SortForm";
-
-export {
-    Categories, Features,
-    Footer, ImagesProduct, Navbar,
-    Pagination, ProductAddPageCard,
-    ProductInCartCard, ProductResultCard,
-    SideMenu, ProductsCarousel, FilterForm, SortForm
-};
+export { Categories } from "./Categories";
+export { Features } from "./Features";
+export { Footer } from "./Footer";
+export { ImagesProduct } from "./ImagesProduct";
+export { Navbar } from "./Navbar";
+export { Pagination } from "./Pagination";
+export { ProductAddPageCard } from "./ProductAddPageCard";
+export { ProductInCartCard } from "./ProductInCartCard";
+export { ProductResultCard } from "./ProductResultCard";
+export { SideMenu } from "./SideMenu";
+export { ProductsCarousel } from "./ProductsCarousel";
+export { FilterForm } from "./FilterForm";
+export { SortForm } from "./SortForm";
+export { StaticInfoCard } from "./StaticInfoCard";
+export { FoldingInfoCard } from "./FoldingInfoCard";

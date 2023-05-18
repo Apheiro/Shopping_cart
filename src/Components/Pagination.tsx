@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Btn from "./Core/Btn"
+import { Btn } from "./Core/Exports"
 import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react"
 import useDebounceFn from '../hooks/useDebounceFn'
 
@@ -10,8 +10,7 @@ interface Props {
     defaultIndex: number
 }
 
-
-export default function Pagination({ totalPages, customClass, defaultIndex }: Props) {
+function Pagination({ totalPages, customClass, defaultIndex }: Props) {
     const [indexSelected, setIndexSelected] = useState(defaultIndex)
     const [indexPages, setIndexPages] = useState<number[]>([1, 2, 3])
     const location = useLocation()
@@ -88,3 +87,5 @@ export default function Pagination({ totalPages, customClass, defaultIndex }: Pr
         </div>
     )
 }
+
+export { Pagination }

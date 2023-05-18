@@ -1,5 +1,6 @@
 import { MutableRefObject, useState, useEffect } from "react"
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react"
+import { motion } from "framer-motion"
 // import { useNavigation } from "react-router-dom"
 import "keen-slider/keen-slider.min.css"
 
@@ -57,10 +58,9 @@ const MutationPlugin: KeenSliderPlugin = (slider) => {
     })
 }
 
-export default function ImagesProduct({ imgs }: Props) {
+function ImagesProduct({ imgs }: Props) {
     const [loaded, setLoaded] = useState<boolean>(false)
     const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({ initial: 0, }, [MutationPlugin])
-    // const isLoading = useNavigation().state === "loading"
     const [thumbnailRef] = useKeenSlider<HTMLDivElement>(
         {
             initial: 0,
@@ -85,10 +85,7 @@ export default function ImagesProduct({ imgs }: Props) {
         setLoaded(false)
         let imgsLoadedPromises: Promise<boolean>[] = []
         imgs.forEach(img => imgsLoadedPromises.push(loadImage(img)))
-        Promise.all(imgsLoadedPromises).then(() => {
-            setLoaded(true)
-            console.log('all images are loaded')
-        })
+        Promise.all(imgsLoadedPromises).then(() => { setLoaded(true) })
     }, [imgs])
 
     const imageStyle = `w-full ${!loaded && 'animate-pulse'} aspect-square bg-white rounded-lg text-neutral-200`
@@ -96,7 +93,12 @@ export default function ImagesProduct({ imgs }: Props) {
     const bgStyle = `h-full aspect-square flex justify-center items-center ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`
 
     return (
-        <div className="w-full aspect-square flex flex-col gap-4 ">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="w-full aspect-square flex flex-col gap-4 "
+        >
             <div ref={sliderRef} className={`keen-slider ${imageStyle}`}>
                 {
                     imgs.map((img, index) => (
@@ -105,7 +107,6 @@ export default function ImagesProduct({ imgs }: Props) {
                         </div>
                     ))
                 }
-
             </div>
             <div ref={thumbnailRef} className="keen-slider thumbnail ">
                 {
@@ -117,8 +118,9 @@ export default function ImagesProduct({ imgs }: Props) {
                         </div>
                     ))
                 }
-
             </div>
-        </div>
+        </motion.div>
     )
 }
+
+export { ImagesProduct }

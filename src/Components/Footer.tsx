@@ -1,6 +1,7 @@
-import Btn from './Core/Btn'
+import { Btn } from './Core/Exports'
 import { IconBrandTwitterFilled, IconBrandFacebookFilled, IconBrandInstagram } from '@tabler/icons-react'
-import { memo } from 'react'
+import { memo } from 'react';
+
 const Footer = memo(() => {
     return (
         <footer className="bg-dbm w-full flex justify-center items-center p-4 ">
@@ -42,4 +43,4 @@ const Footer = memo(() => {
 })
 
 
-export default Footer
+export { Footer };

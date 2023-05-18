@@ -1,8 +1,8 @@
 
-import InfoCard from './Core/InfoCard'
+import { StaticInfoCard } from './Exports'
 import { useMediaQuery } from '@mantine/hooks';
 
-export default function Features() {
+function Features() {
     const wide = useMediaQuery('(min-width: 660px)');
     const features: { title: string, description: string }[] = [
         { title: 'Full control of your shopping cart', description: 'Add or remove products easily, without limitations.' },
@@ -18,7 +18,7 @@ export default function Features() {
             <div className={`${wide ? 'grid-cols-2 grid-rows-3' : 'flex flex-col'} grid gap-5`}>
                 {
                     features.map(({ title, description }, index) => {
-                        return <InfoCard key={`Feature-${index}`} title={title} description={description} variant={wide ? 'static' : 'folding'} />
+                        return <StaticInfoCard key={`Feature-${index}`} title={title} description={description} />
                     })
                 }
             </div>
@@ -26,3 +26,5 @@ export default function Features() {
         </div>
     )
 }
+
+export { Features }

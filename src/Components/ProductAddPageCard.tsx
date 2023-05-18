@@ -1,4 +1,4 @@
-import Btn from "./Core/Btn"
+import { Btn } from "./Core/Exports"
 
 interface Props {
     condition: string,
@@ -8,7 +8,7 @@ interface Props {
     price: number,
 }
 
-export default function ProductAddPageCard({ condition, title, model, sku, price }: Props) {
+function ProductAddPageCard({ condition, title, model, sku, price }: Props) {
     return (
         <div className="flex flex-col gap-10 w-full bg-dbm rounded-lg p-3 text-neutral-300 font-semibold">
             <div className="flex flex-col gap-4">
@@ -31,3 +31,5 @@ export default function ProductAddPageCard({ condition, title, model, sku, price
         </div>
     )
 }
+
+export { ProductAddPageCard }

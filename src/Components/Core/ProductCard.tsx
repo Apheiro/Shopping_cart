@@ -7,7 +7,7 @@ interface Props {
     customClass?: string
 }
 
-export default function ProductCard({ img, title, price, oldPrice, link, customClass }: Props) {
+function ProductCard({ img, title, price, oldPrice, link, customClass }: Props) {
     return (
         <a href={link} className={`${customClass} mx-2 min-w-40 w-48 h-64 p-2 bg-dbm rounded-lg flex flex-col gap-2 cursor-pointer select-none `}>
             <div className="p-1 h-36 bg-white rounded shrink-0">
@@ -23,3 +23,5 @@ export default function ProductCard({ img, title, price, oldPrice, link, customC
         </a>
     )
 }
+
+export { ProductCard }

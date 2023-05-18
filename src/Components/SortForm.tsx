@@ -30,3 +30,5 @@ export default function SortForm({ ...props }: Props) {
         </div>
     )
 }
+
+export { SortForm }

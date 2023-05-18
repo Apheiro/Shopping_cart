@@ -1,11 +1,5 @@
-import Btn from "./Btn";
-import CategoryBtn from "./CategoryBtn";
-import Radios from "./Radios";
-import InfoCard from "./InfoCard";
-import Input from "./Input";
-import ProductCard from "./ProductCard";
-
-export {
-    Btn, CategoryBtn, Radios,
-    InfoCard, Input, ProductCard
-};
+export { Btn } from "./Btn";
+export { CategoryBtn } from "./CategoryBtn";
+export { Radios } from "./Radios";
+export { Input } from "./Input";
+export { ProductCard } from "./ProductCard";

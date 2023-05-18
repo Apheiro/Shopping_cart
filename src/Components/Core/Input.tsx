@@ -49,4 +49,4 @@ function Input({ variant, ...Props }: Props) {
     )
 }
 
-export default Input
+export { Input }

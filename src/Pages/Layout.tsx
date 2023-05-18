@@ -1,31 +1,72 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar, SideMenu } from '../Components/Exports'
-import Footer from '../Components/Footer';
+import { Footer } from '../Components/Exports';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigation } from 'react-router-dom';
+import { IconLoader2 } from '@tabler/icons-react'
 interface Props {
   children: React.ReactNode,
 }
 
 export default function Layout({ children }: Props) {
-  const [hidde, setHidde] = useState<boolean>(true)
+  const [showElements, setShowElements] = useState<boolean>(false)
+  const isLoading = useNavigation().state === 'loading'
+
+  useEffect(() => {
+    if (showElements) document.body.style.overflowY = 'hidden'
+    else document.body.style.overflowY = 'unset'
+  }, [showElements])
 
   return (
     <div className="bg-db min-h-screen flex-col flex items-start ">
-      <header className='fixed flex w-full left-0 top-4 px-4 z-10'>
-        <Navbar hiddeFn={() => { setHidde(!hidde) }} />
+      <header key={'headerKey'} className='fixed flex w-full left-0 top-4 px-4 z-10'>
+        <Navbar hiddeFn={() => { setShowElements(!showElements) }} />
       </header>
-      <div id='sideMenu'>
-        <div className={`${hidde && 'hidden'} z-10 bg-black w-screen h-screen fixed left-0 top-0 bg-opacity-20`} onClick={() => { setHidde(!hidde) }} />
-        <SideMenu hidde={hidde} setHidde={setHidde} />
-      </div>
+
+      <AnimatePresence>
+        {
+          showElements &&
+          <div id='sideMenu'>
+            <motion.div
+              className={` z-10 bg-black w-screen h-screen fixed left-0 top-0 bg-opacity-20`}
+              onClick={() => { setShowElements(false) }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+            <SideMenu setShowElements={setShowElements} />
+          </div>
+        }
+      </AnimatePresence>
+
       <main className='w-full flex flex-col'>
         <div className='flex flex-col gap-5 sm:gap-30'>
           {children}
         </div>
       </main>
-      <Footer />
-    </div>
 
+      <AnimatePresence>
+        {
+          isLoading &&
+          <motion.div
+            className='bg-neutral-5/20 p-3 backdrop-blur-lg rounded-lg fixed bottom-2 left-1/2 -translate-x-1/2 color-violet-5 z-10'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <IconLoader2 className='animate-spin' height={20} width={20} stroke={4} />
+          </motion.div>
+        }
+      </AnimatePresence>
+      {/* 
+      <div key={'tetsetestseset'} className='bg-red w-10 h-10 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-99999' onClick={() => {
+        console.log(showElements, 'showElements')
+        console.log(isLoading, 'isLoading')
+        // console.log
+        // setShowElements(!showElements)
+
+      }}>test</div> */}
+      <Footer />
+    </div >
   )
 }
-
-

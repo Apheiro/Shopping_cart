@@ -88,12 +88,11 @@ export async function getProductsList(reqParams: ReqParams) {
 }
 
 export async function getProduct(sku: string) {
+    console.log('request from product component')
     const paramsBB = new URLSearchParams({
         show: "name,regularPrice,salePrice,longDescription,description,plot,features,details,sku,images,image,condition,modelNumber,orderable,quantityLimit",
         apiKey: API_KEY
     })
-
-    console.log('request from product component')
     return fetch(`${urlProducts}/${sku}.json?${paramsBB.toString()}`, { mode: 'cors' })
         .then((response) => response.json())
         .then((data) => {

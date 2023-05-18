@@ -1,4 +1,4 @@
-import ProductCard from './Core/ProductCard';
+import { ProductCard } from './Core/Exports';
 // import React, { useState } from 'react';
 // import { useKeenSlider } from "keen-slider/react"
 // import Btn from './Core/Btn';
@@ -12,7 +12,7 @@ interface Props {
     products: Product[]
 }
 
-export default function ProductsCarousel({ products }: Props) {
+function ProductsCarousel({ products }: Props) {
     // const [currentSlide, setCurrentSlide] = useState(0)
     // const [loaded, setLoaded] = useState(false)
     // const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
@@ -68,3 +68,5 @@ export default function ProductsCarousel({ products }: Props) {
 
 
 }
+
+export { ProductsCarousel }

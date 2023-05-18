@@ -5,26 +5,29 @@ import Start from "./Start"
 import Search, { loader as searchLoader } from "./Search";
 import Product, { loader as productLoader, action as productAction } from "./Product";
 
-
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route
             path="/"
+            key={"cagadita"}
             element={<Root />}
             loader={rootLoader}
             action={rootAction}
             errorElement={<ErrorPage />}
         >
             <Route
+                key={"start"}
                 index={true}
                 element={<Start />}
             />
             <Route
+                key={"search"}
                 path="search"
                 element={<Search />}
                 loader={searchLoader}
             />
             <Route
+                key={"product"}
                 path="product/:sku"
                 element={<Product />}
                 loader={productLoader}
@@ -35,4 +38,3 @@ const router = createBrowserRouter(
 )
 
 export default function RouteSwitch() { return <RouterProvider router={router} /> }
-

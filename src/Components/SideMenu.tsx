@@ -12,7 +12,7 @@ interface Props {
 }
 
 function totalPrice(products: ReqParams[]) {
-    return products.reduce((acc, product) => acc + parseFloat(product.salePrice) * parseFloat(product.quantity), 0)
+    return products.reduce((acc, product) => acc + parseFloat(product.salePrice) * parseFloat(product.quantity), 0).toFixed(2)
 }
 
 function productsAddUrl(products: ReqParams[]) {
@@ -30,7 +30,7 @@ const SideMenu = memo(({ setShowElements }: Props) => {
 
     return (
         <motion.div
-            className={`z-10 flex flex-col h-screen w-full fixed left-100% max-w-xl bg-db text-neutral-300`}
+            className={`z-10 flex flex-col h-screen w-full fixed left-100% max-w-xl bg-neutral-3 text-neutral-9 dark:(bg-db text-neutral-3)`}
             initial={{ x: '0' }}
             animate={{ x: '-100%' }}
             exit={{ x: '0' }}
@@ -60,7 +60,7 @@ const SideMenu = memo(({ setShowElements }: Props) => {
                     }
                 </AnimatePresence>
             </div>
-            <div className="bg-dbm flex justify-between items-start p-3 gap-5">
+            <div className=" bg-neutral-1 drop-shadow-lg dark:(bg-dbm) flex justify-between items-start p-3 gap-5">
                 <p className="font-bold">Total: ${totalPrice(products)}</p>
                 {
                     products.length > 0 ?
@@ -79,9 +79,3 @@ const SideMenu = memo(({ setShowElements }: Props) => {
 }, (prevProp, nextProp) => prevProp === nextProp)
 
 export { SideMenu }
-
-
-6538722
-28640148
-33444027
-33571646

@@ -2,7 +2,6 @@ import { Btn } from "./Core/Exports";
 import { useMediaQuery } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigation } from "react-router-dom"
 import { motion } from "framer-motion"
 
 interface Props {
@@ -20,7 +19,6 @@ function ProductResultCard({ img, condition, title, model, sku, price, oldPrice,
     const isMobile = useMediaQuery('(max-width: 500px)')
     const [isLoad, setIsLoad] = useState(false)
     const darkerText = 'text-neutral-500 leading-4 font-semibold text-sm'
-    const isLoading = useNavigation().state === "loading"
 
     function conditioAndTitle() {
         return (
@@ -41,11 +39,10 @@ function ProductResultCard({ img, condition, title, model, sku, price, oldPrice,
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className={`${isMobile ? 'grid grid-cols-[minmax(20px,160px)_auto] grid-rows-[auto_1fr]' : 'flex'} gap-5 p-3 rounded-lg  bg-dbm text-base text-neutral-300 w-full`}
+            className={`${isMobile ? 'grid grid-cols-[minmax(20px,160px)_auto] grid-rows-[auto_1fr]' : 'flex'} gap-5 p-3 rounded-lg bg-neutral-1 shadow-md dark:(bg-dbm) text-base w-full`}
         >
             {isMobile && conditioAndTitle()}
             <div className={` ${!isLoad && 'animate-pulse'} flex justify-center items-center p-1 w-full max-w-[10rem] aspect-square bg-white rounded`}>
-                {/* <div className="h-full w-full bg-contain bg-no-repeat bg-center bg-white" style={{ backgroundImage: `url(${img})` }} /> */}
                 <img src={img} onLoad={() => setIsLoad(true)} className={`${isLoad ? 'opacity-100' : 'opacity-0'} max-h-full max-w-full transition-opacity duration-800`} />
             </div>
             <div className={`${isMobile ? 'justify-evenly gap-2' : 'justify-between'} w-full flex flex-col `}>

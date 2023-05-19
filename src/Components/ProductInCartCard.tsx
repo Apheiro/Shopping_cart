@@ -58,7 +58,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
 
     const productProps = {
         ref: productRef,
-        className: 'flex flex-col h-27 gap-3 rounded-lg bg-dbm text-base text-neutral-300 font-semibold overflow-hidden mb-4',
+        className: 'flex flex-col h-27 gap-3 rounded-lg shadow-md bg-neutral-1 text-neutral-9 dark:(bg-dbm  text-neutral-3) text-base font-semibold overflow-hidden mb-4',
         initial: { opacity: 0 },
         animate: { opacity: 1, height: expandProductList ? 'auto' : '108px' },
         exit: { opacity: 0 },
@@ -73,7 +73,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
     }
 
     const buttonsProps = {
-        className: "flex flex-wrap gap-2 items-center justify-between m-3 mt-0 ",
+        className: "flex flex-wrap gap-2 items-center justify-between m-3 mt-0",
         animate: { opacity: showRemoveBtn ? 1 : 0 },
         onAnimationComplete: () => isOpen() && !showRemoveBtn && setExpandProductList(false),
         transition: { duration: 0.15 }
@@ -82,7 +82,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
     return (
         <motion.div {...productProps} >
             <div className="flex min-h-21 gap-5 m-3 mb-0">
-                <div className="p-1 min-w-21 aspect-square bg-white rounded">
+                <div className="p-1 min-w-21 aspect-square bg-white rounded shadow-lg">
                     <div className="h-full w-full bg-contain bg-no-repeat bg-center bg-white" style={{ backgroundImage: `url(${img})` }} />
                 </div>
                 <div className="w-full grid grid-cols-2 grid-rows-[1fr_auto] flex-col justify-between gap-3">

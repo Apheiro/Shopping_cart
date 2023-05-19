@@ -18,17 +18,16 @@ export default function Layout({ children }: Props) {
   }, [showElements])
 
   return (
-    <div className="bg-db min-h-screen flex-col flex items-start ">
+    <div className="min-h-screen flex-col flex items-start ">
       <header key={'headerKey'} className='fixed flex w-full left-0 top-4 px-4 z-10'>
         <Navbar hiddeFn={() => { setShowElements(!showElements) }} />
       </header>
-
       <AnimatePresence>
         {
           showElements &&
           <div id='sideMenu'>
             <motion.div
-              className={` z-10 bg-black w-screen h-screen fixed left-0 top-0 bg-opacity-20`}
+              className={`z-10 bg-black/20 w-screen h-screen fixed left-0 top-0`}
               onClick={() => { setShowElements(false) }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -58,14 +57,6 @@ export default function Layout({ children }: Props) {
           </motion.div>
         }
       </AnimatePresence>
-      {/* 
-      <div key={'tetsetestseset'} className='bg-red w-10 h-10 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-99999' onClick={() => {
-        console.log(showElements, 'showElements')
-        console.log(isLoading, 'isLoading')
-        // console.log
-        // setShowElements(!showElements)
-
-      }}>test</div> */}
       <Footer />
     </div >
   )

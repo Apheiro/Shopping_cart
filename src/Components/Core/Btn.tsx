@@ -20,16 +20,16 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
             className += 'p-4 bg-transparent border-solid border-4 text-xl text-dv border-dv hover:(bg-dv/20)';
             break;
         case 'base':
-            className += 'p-3 bg-dv/30 text-base text-violet-4 hover:bg-dv/50';
+            className += 'p-3  text-base bg-violet-4/30 text-dv hover:bg-violet-4/50 dark:(bg-dv/30 text-violet-4 hover:bg-dv/50)';
             break;
         case 'removeCart':
-            className += 'p-3 bg-red-5/30 text-base text-red-5 hover:bg-red-500/50';
+            className += 'p-3  text-base bg-red-4/30 text-red-5 hover:bg-red-4/50 dark:(bg-red-5/30 text-red-5 hover:bg-red-5/50)';
             break;
         case 'pay':
-            className += 'p-3 bg-lime-5/30 text-base text-lime-5 hover:bg-lime-500/50';
+            className += 'p-3  text-base bg-lime-4/30 text-lime-6 hover:bg-lime-4/50 dark:(bg-lime-5/30 text-lime-5 hover:bg-lime-5/50)';
             break;
         case 'cart':
-            className += 'p-2 flex items-center gap-2 bg-transparent text-base text-neutral-100 opacity-40 hover:(bg-white bg-opacity-[0.03] opacity-100)';
+            className += 'p-2 flex items-center gap-2 text-base bg-transparent text-black/40 hover:(text-black/80 bg-black/10) dark:(text-neutral-100/40 hover:text-neutral-100/80 hover:bg-white/4)';
             break;
         default:
     }

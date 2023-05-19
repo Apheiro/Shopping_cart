@@ -20,7 +20,7 @@ export default function SortForm({ ...props }: Props) {
             <p>
                 Sort by:
             </p>
-            <select onChange={handleSubmit} className="bg-db rounded-lg p-1 h-9 border-none" {...props}>
+            <select onChange={handleSubmit} className=" bg-neutral-3 dark:(bg-db) rounded-lg p-1 h-9 border-none" {...props}>
                 <option value="bm">Best match</option>
                 <option value="salePrice.asc">Price: Low to High</option>
                 <option value="salePrice.dsc">Price: High to Low</option>

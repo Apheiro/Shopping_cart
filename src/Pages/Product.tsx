@@ -91,22 +91,22 @@ export default function Product() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         key={`${product.sku}-ProductInfo`}
-                        className="flex flex-col gap-4 text-neutral-3"
+                        className="flex flex-col gap-4"
                     >
-                        <div className="flex flex-col gap-4 bg-dbm p-3 rounded-lg">
+                        <div className="flex flex-col gap-4 bg-neutral-1 dark:(bg-dbm) p-3 rounded-lg shadow-md">
                             <div className="flex justify-between">
-                                <p className="font-semibold text-neutral-5">{product.condition}</p>
-                                {product.quantityLimit === 1 && <p className="color-amber-4 border-amber-4 border-1 rounded-md px-1">Only one per customer</p>}
+                                <p className="font-semibold">{product.condition}</p>
+                                {product.quantityLimit === 1 && <p className="color-amber-6 border-amber-6 dark:(color-amber-4 border-amber-4) border-1 rounded-md px-1">Only one per customer</p>}
                             </div>
                             <h1 className="font-bold text-xl">{product.name}</h1>
                             <div className="flex justify-between">
-                                <p><span className="text-neutral-5 font-bold">Model:</span> {product.model}</p>
-                                <p><span className="text-neutral-5 font-bold">SKU:</span> {product.sku}</p>
+                                <p><span className="font-bold">Model:</span> {product.model}</p>
+                                <p><span className="font-bold">SKU:</span> {product.sku}</p>
                             </div>
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className="text-neutral-5 font-bold">Price</p>
-                                    <h2 className="text-xl">${product.salePrice} {product.salePrice < product.regularPrice && <span className="line-through decoration-neutral-5 decoration-2 text-neutral-5"> {product.regularPrice}</span>}</h2>
+                                    <p className="font-bold">Price</p>
+                                    <h2 className="text-xl">${product.salePrice} {product.salePrice < product.regularPrice && <span className="line-through decoration-2"> {product.regularPrice}</span>}</h2>
                                 </div>
                                 {buttonState(product.orderable)}
                             </div>

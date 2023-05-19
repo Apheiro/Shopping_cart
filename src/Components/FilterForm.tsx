@@ -30,7 +30,7 @@ export default function FilterForm({ defaultValue }: Props) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.25 }}
-            className="md:(row-start-1 row-end-3) bg-dbm h-fit p-4 rounded-lg"
+            className="md:(row-start-1 row-end-3) bg-neutral-1 dark:(bg-dbm) h-fit p-4 rounded-lg"
         >
             <Form
                 method="get"
@@ -39,7 +39,7 @@ export default function FilterForm({ defaultValue }: Props) {
             >
                 <h2 className="font-bold">Filters</h2>
                 <div className="flex flex-col gap-2">
-                    <h3 className="font-semibold color-neutral-5">Condition</h3>
+                    <h3 className="font-semibold ">Condition</h3>
                     <Radios
                         name="condition"
                         value="new"
@@ -56,7 +56,7 @@ export default function FilterForm({ defaultValue }: Props) {
                     />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <h3 className="font-semibold color-neutral-5">Price range</h3>
+                    <h3 className="font-semibold">Price range</h3>
                     <div className="flex justify-center items-center gap-3">
                         <Input variant="price" placeholder="min" name="min" defaultValue={defaultValue.min} />-<Input variant="price" placeholder="max" name="max" defaultValue={defaultValue.max} />
                     </div>

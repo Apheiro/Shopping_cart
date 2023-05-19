@@ -2,11 +2,12 @@ import { ActionFunctionArgs, Outlet, redirect } from 'react-router-dom';
 import Layout from './Layout';
 import { getCartProducts, editCart } from '../utils/productsRequests';
 import { removeFromCart } from '../utils/productsRequests';
+import { useEffect } from 'react';
 
 export async function loader() {
     const products = await getCartProducts()
-    // console.log('loader')
-    return { products };
+    const darkModeOnLS = Boolean(localStorage.getItem('darkModShoppingCart'))
+    return { products, darkModeOnLS };
 }
 
 export async function action(paramsAction: ActionFunctionArgs) {

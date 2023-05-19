@@ -10,7 +10,7 @@ interface Props {
 }
 
 function FoldingInfoCard({ title, description, customClass }: Props): JSX.Element {
-    const titleStyle: string = 'flex items-center text-neutral-400 text-md 2sm:text-xl font-bold'
+    const titleStyle: string = 'flex items-center text-neutral-7 dark:(text-neutral-400) text-md 2sm:text-xl font-bold'
     const [open, setOpen] = useState<boolean>(false)
     const [showCardData, setShowCardData] = useState<boolean>(false)
     const foldingCardRef = useRef<HTMLDivElement>(null)
@@ -19,7 +19,7 @@ function FoldingInfoCard({ title, description, customClass }: Props): JSX.Elemen
         ref: foldingCardRef,
         animate: { height: open ? 'fit-content' : '64px' },
         onAnimationComplete: () => isOpen() && setShowCardData(true),
-        className: `${customClass ?? ''} bg-dbm rounded-lg w-full h-16 max-w-xl flex flex-col gap-2 overflow-hidden`
+        className: `${customClass ?? ''} bg-neutral-1 dark:(bg-dbm) shadow-md rounded-lg w-full h-16 flex flex-col gap-2 overflow-hidden`
     }
 
     return (

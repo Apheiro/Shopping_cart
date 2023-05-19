@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Btn } from "./Core/Exports"
 import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react"
 import useDebounceFn from '../hooks/useDebounceFn'
+import { computeMikkTSpaceTangents } from 'three/examples/jsm/utils/BufferGeometryUtils'
 
 interface Props {
     totalPages: number,
@@ -48,6 +49,10 @@ function Pagination({ totalPages, customClass, defaultIndex }: Props) {
     }
 
     useEffect(() => {
+        setIndexSelected(defaultIndex)
+    }, [defaultIndex])
+
+    useEffect(() => {
         setIndexPages(indexPagesFn())
     }, [indexSelected])
 
@@ -69,7 +74,7 @@ function Pagination({ totalPages, customClass, defaultIndex }: Props) {
                         variant="cart"
                         key={index}
                         onClick={() => { setIndexSelected(index), changePageUrlDebounce() }}
-                        classNameCustom={`${indexSelected === index && '!bg-dbl !opacity-100'} text-sm`}
+                        classNameCustom={`${indexSelected === index && '!bg-neutral-1/60 dark:(!bg-dbl)'} text-sm`}
                     >
                         {index}
                     </Btn>

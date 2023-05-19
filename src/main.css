@@ -8,11 +8,11 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar-track {
-    background: #ffffff05;
+    background: #1d1d1d;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(241, 241, 241, 0.178);
+    background: rgb(70, 70, 70);
     border-radius: 20px;
     transition: background 0.5s ease-in-out;
 }

@@ -47,7 +47,6 @@ export default function Search() {
     };
     const [isFilterHidden, setIsFilterHidden] = useState(false);
     const noProductsFound = searchResult.products.length === 0;
-
     const toggleFilter = () => setIsFilterHidden(!isFilterHidden);
 
     return (
@@ -57,8 +56,9 @@ export default function Search() {
             animate={'animate'}
             variants={searchAnimation}
         >
-            <div className="flex flex-col md:(grid grid-cols-[auto_1fr]) gap-4 w-full max-w-5xl">
-                <div className="bg-dbm h-fit p-3 rounded-lg col-start-2 col-end-3 flex flex-wrap gap-4 justify-center sm:justify-between items-center">
+            <div className="flex flex-col md:(grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]) gap-4 w-full max-w-5xl">
+
+                <div className=" bg-neutral-1 shadow-md dark:(bg-dbm) h-fit p-3 rounded-lg col-start-2 col-end-3 flex flex-wrap gap-4 justify-center sm:justify-between items-center">
                     <div className="flex items-center gap-2">
                         <Btn variant="cart" onClick={toggleFilter}>
                             <IconFilter size={20} />
@@ -67,6 +67,7 @@ export default function Search() {
                     </div>
                     <SortForm defaultValue={reqParams.sr} />
                 </div>
+
                 <AnimatePresence>
                     {
                         !isFilterHidden &&
@@ -81,28 +82,28 @@ export default function Search() {
                     }
                 </AnimatePresence>
                 <div className={`flex ${noProductsFound && 'justify-center items-center'} flex-col gap-4 col-start-2 col-end-3 h-full`}>
-                    <AnimatePresence mode="wait">
-                        {
-                            noProductsFound &&
-                            <h1 className="text-2xl font-bold text-neutral-5"> No products found</h1>
-                        }
-                        {
-                            searchResult.products.map(
-                                ({ image, condition, name, modelNumber, sku, salePrice, regularPrice, orderable }) =>
-                                    <ProductResultCard
-                                        key={`productSearchResult-${sku}`}
-                                        img={image}
-                                        condition={condition}
-                                        title={name}
-                                        model={modelNumber}
-                                        sku={sku}
-                                        price={salePrice}
-                                        oldPrice={regularPrice}
-                                        orderable={orderable}
-                                    />
-                            )
-                        }
-                    </AnimatePresence>
+                    {/* <AnimatePresence mode="wait"> */}
+                    {
+                        noProductsFound &&
+                        <h1 className="text-2xl font-bold text-neutral-5"> No products found</h1>
+                    }
+                    {
+                        searchResult.products.map(
+                            ({ image, condition, name, modelNumber, sku, salePrice, regularPrice, orderable }) =>
+                                <ProductResultCard
+                                    key={`productSearchResult-${sku}`}
+                                    img={image}
+                                    condition={condition}
+                                    title={name}
+                                    model={modelNumber}
+                                    sku={sku}
+                                    price={salePrice}
+                                    oldPrice={regularPrice}
+                                    orderable={orderable}
+                                />
+                        )
+                    }
+                    {/* </AnimatePresence> */}
                 </div>
                 {
                     searchResult && searchResult.totalPages > 1 &&

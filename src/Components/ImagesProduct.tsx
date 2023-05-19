@@ -1,7 +1,6 @@
 import { MutableRefObject, useState, useEffect } from "react"
 import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from "keen-slider/react"
 import { motion } from "framer-motion"
-// import { useNavigation } from "react-router-dom"
 import "keen-slider/keen-slider.min.css"
 
 interface Props {
@@ -99,7 +98,7 @@ function ImagesProduct({ imgs }: Props) {
             exit={{ opacity: 0 }}
             className="w-full aspect-square flex flex-col gap-4 "
         >
-            <div ref={sliderRef} className={`keen-slider ${imageStyle}`}>
+            <div ref={sliderRef} className={`keen-slider ${imageStyle} shadow-md`}>
                 {
                     imgs.map((img, index) => (
                         <div className={`keen-slider__slide ${sliderStyle}`} key={`imgSlider${index + 1}`}>
@@ -111,7 +110,7 @@ function ImagesProduct({ imgs }: Props) {
             <div ref={thumbnailRef} className="keen-slider thumbnail ">
                 {
                     imgs.map((img, index) => (
-                        <div className={`keen-slider__slide ${sliderStyle}`} key={`imgSliderThmb${index + 1}`}>
+                        <div className={`keen-slider__slide ${sliderStyle} shadow-md`} key={`imgSliderThmb${index + 1}`}>
                             <div className={bgStyle}>
                                 <img src={img} className="max-h-full max-w-full" />
                             </div>

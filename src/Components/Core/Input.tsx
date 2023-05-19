@@ -4,11 +4,12 @@ interface Props {
     placeholder?: string,
     name?: string,
     id?: string,
-    defaultValue?: string | number
+    defaultValue?: string | number,
+    customClass?: string
 }
 
-function Input({ variant, ...Props }: Props) {
-    const focusStyle: string = 'text-neutral-300 text-opacity-50 focus:text-opacity-100 transition-colors duration-500'
+function Input({ variant, customClass, ...Props }: Props) {
+    const focusStyle: string = ' text-neutral-9/50 focus:text-neutral-9 dark:(text-neutral-3/50 focus:text-neutral-3) transition-colors duration-500'
     const removeInputBtn: string = '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
     return (
         <>
@@ -18,14 +19,14 @@ function Input({ variant, ...Props }: Props) {
                     type="search"
                     placeholder="Search"
                     autoComplete="off"
-                    className={`outline-none bg-transparent rounded-l-lg p-1 placeholder:text-neutral-500 text-center focus:bg-neutral-500 focus:bg-opacity-20 max-w-sm w-full font-semibold ${focusStyle}`}
+                    className={`${customClass} outline-none bg-transparent rounded-l-lg p-1 placeholder:text-neutral-6 focus:bg-neutral-8/10 dark:(placeholder:text-neutral-5 focus:bg-neutral-5/20) text-center max-w-sm w-full font-semibold ${focusStyle}`}
                     {...Props}
                 />
             }
             {
                 variant === 'price' &&
-                <label htmlFor="" className={`flex gap-2 bg-db rounded-lg p-1 font-semibold`}>
-                    <p className={`text-stone-300 text-opacity-50`} >$</p>
+                <label htmlFor="" className={`flex gap-2 bg-neutral-3 dark:(bg-db) rounded-lg p-1 font-semibold`}>
+                    <p className={`dark:(text-neutral-3) text-opacity-50`} >$</p>
                     <input
                         type="number"
                         className={`bg-transparent outline-none w-14 ${focusStyle} ${removeInputBtn}`}
@@ -35,7 +36,7 @@ function Input({ variant, ...Props }: Props) {
             }
             {
                 variant === 'quantity' &&
-                <label htmlFor="" className={`flex gap-2 bg-db rounded-lg p-1 font-semibold`}>
+                <label htmlFor="" className={`flex gap-2 dark:(bg-db) rounded-lg p-1 font-semibold`}>
                     <input
                         type="number"
                         max={999}

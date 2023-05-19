@@ -8,10 +8,10 @@ interface Props {
 }
 
 function StaticInfoCard({ title, description, customClass }: Props): JSX.Element {
-    const titleStyle: string = 'flex items-center text-neutral-400 text-md 2sm:text-xl font-bold'
+    const titleStyle: string = 'flex items-center text-neutral-7 dark:(text-neutral-400) text-md 2sm:text-xl font-bold'
     const [seeMore, setSeeMore] = useState<boolean>(false)
     const [itClamp, setItClamp] = useState<boolean>(false)
-    const descriptionStyle: string = `text-neutral-300 text-sm text-justify ${!seeMore && 'line-clamp-11'}`
+    const descriptionStyle: string = `text-sm text-justify ${!seeMore && 'line-clamp-11'}`
     const paraRef = useRef<HTMLParagraphElement>(null)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function StaticInfoCard({ title, description, customClass }: Props): JSX.Element
     }, [description])
 
     return (
-        <div className={`${customClass} bg-dbm h-fit rounded-lg p-3 w-full flex flex-col gap-2`}>
+        <div className={`${customClass} bg-neutral-1 dark:(bg-dbm) h-fit rounded-lg p-3 w-full flex flex-col gap-2 shadow-md`}>
             <div>
                 <h2 className={titleStyle}>{title}</h2>
             </div>

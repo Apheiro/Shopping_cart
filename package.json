@@ -15,6 +15,7 @@
     "@unocss/autocomplete": "^0.51.8",
     "@unocss/reset": "^0.51.8",
     "framer-motion": "^10.12.12",
+    "html-entities": "^2.3.3",
     "keen-slider": "^6.8.5",
     "query-string": "^8.1.0",
     "react": "^18.2.0",

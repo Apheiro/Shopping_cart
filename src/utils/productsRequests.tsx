@@ -59,7 +59,7 @@ export interface ProductInfo {
 const urlProducts = "https://api.bestbuy.com/v1/products";
 
 function formatQuery(query: string): string {
-    const words = query.split(' ');
+    const words = query.split(' ').filter(word => word !== '');
     const result = words.map(word => queryString.stringify({ search: word }));
     return result.join('&');
 }
@@ -76,6 +76,7 @@ export async function getProductsList(reqParams: ReqParams) {
     });
 
     const attributes = `((${formatQuery(reqParams.q)})${reqParams.type ? `&type=${reqParams.type}` : ''}${reqParams.condition ? `&condition=${reqParams.condition}` : ''}${reqParams.min ? `&salePrice>${reqParams.min}` : ''}${reqParams.max ? `&salePrice<${reqParams.max}` : ''})`
+    console.log(`${urlProducts}${attributes}?${paramsBB.toString()}`)
     return fetch(`${urlProducts}${attributes}?${paramsBB.toString()}`, { mode: 'cors' })
         .then(res => res.json())
         .then(data => {
@@ -86,7 +87,13 @@ export async function getProductsList(reqParams: ReqParams) {
                 products: data.products
             }
             return dataFormated
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            console.log(err)
+            throw new Response("", {
+                status: 429,
+                statusText: "Too many requests",
+            });
+        })
 }
 
 export async function getProduct(sku: string) {
@@ -116,6 +123,12 @@ export async function getProduct(sku: string) {
                 quantityLimit: data.quantityLimit
             }
             return productData
+        }).catch(err => {
+            console.log(err)
+            throw new Response("", {
+                status: 429,
+                statusText: "Too many requests",
+            });
         })
 }
 

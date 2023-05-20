@@ -1,5 +1,5 @@
 import { addToCart, ReqParams, getCartProducts, getProduct, ProductInfo } from "../utils/productsRequests"
-import { LoaderFunctionArgs, useLoaderData, ActionFunctionArgs, useSubmit } from "react-router-dom"
+import { LoaderFunctionArgs, useLoaderData, ActionFunctionArgs, useSubmit, useFetcher } from "react-router-dom"
 import { details, features, images, description } from "../utils/dataFormatter"
 import { Btn } from "../Components/Core/Exports"
 import { ImagesProduct, StaticInfoCard, FoldingInfoCard } from "../Components/Exports"
@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from "framer-motion"
 export async function loader(paramsLoader: LoaderFunctionArgs) {
     const product = await getProduct(paramsLoader.params.sku ?? '')
     const productsInCart = await getCartProducts()
-    const isProductInCart = !!productsInCart.find(p => p.sku === product.sku.toString())
+    const isProductInCart = !!productsInCart.find(p => p.sku === product?.sku.toString())
     return { product, isProductInCart }
 }
 export async function action(paramsAction: ActionFunctionArgs) {
@@ -36,7 +36,7 @@ const productAnimation = {
 export default function Product() {
     const { product, isProductInCart } = useLoaderData() as { product: ProductInfo, isProductInCart: boolean };
     const [disabledBtn, setDisabledBtn] = useState(isProductInCart)
-    const submit = useSubmit()
+    const submit = useFetcher().submit
 
     useEffect(() => {
         setDisabledBtn(isProductInCart)
@@ -49,7 +49,8 @@ export default function Product() {
         formData.append('images', image)
         formData.append('sku', sku.toString())
         formData.append('quantity', quantity.toString())
-        formData.append('quantityLimit', quantityLimit.toString())
+        if (quantityLimit) formData.append('quantityLimit', quantityLimit.toString())
+        else formData.append('quantityLimit', '1')
         return formData
     }
 
@@ -62,11 +63,11 @@ export default function Product() {
     function buttonState(productOrderable: 'Available' | 'SoldOut' | 'PreOrder'): JSX.Element {
         switch (productOrderable) {
             case 'Available':
-                return <Btn variant="base" disabled={disabledBtn} onClick={handleSubmit} classNameCustom={disabledBtn && '!bg-db'}>{isProductInCart ? 'Added' : 'Add to cart'}</Btn>
+                return <Btn variant="base" disabled={disabledBtn} onClick={handleSubmit} classNameCustom={disabledBtn && '!bg-neutral-3 dark:!bg-db'}>{isProductInCart ? 'Added' : 'Add to cart'}</Btn>
             case 'SoldOut':
                 return <Btn variant="base" disabled classNameCustom={'!bg-neutral-3 dark:!bg-db'}>Sold out</Btn>
             case 'PreOrder':
-                return <Btn variant="base" disabled={disabledBtn} onClick={handleSubmit} classNameCustom={`${disabledBtn && '!bg-db'} !bg-amber-4/30 !color-amber-4`}>{isProductInCart ? 'Added' : 'Pre-order'}</Btn>
+                return <Btn variant="base" disabled={disabledBtn} onClick={handleSubmit} classNameCustom={`${disabledBtn && '!bg-neutral-3 dark:!bg-db'} !color-amber-5 !bg-amber-5/30 dark:( !color-amber-4 !bg-amber-4/30)`}>{isProductInCart ? 'Added' : 'Pre-order'}</Btn>
         }
     }
 

@@ -1,6 +1,6 @@
 import { Btn, Input } from "./Core/Exports";
 import { useState, useRef } from 'react'
-import { useLocation, useSubmit, Link } from "react-router-dom"
+import { useLocation, useSubmit, Link, useFetcher } from "react-router-dom"
 import { IconAlertTriangle } from '@tabler/icons-react'
 import useDebounceFn from '../hooks/useDebounceFn'
 import { motion } from "framer-motion"
@@ -35,7 +35,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
     const [showRemoveBtn, setShowRemoveBtn] = useState(false)
     const productRef = useRef<HTMLDivElement>(null)
     const location = useLocation()
-    const submit = useSubmit()
+    const submit = useFetcher().submit
     const submitDebounced = useDebounceFn(submit, 800)
     const darkerText = 'text-neutral-500 leading-4'
     const isOpen = () => productRef.current?.clientHeight === productRef.current?.scrollHeight

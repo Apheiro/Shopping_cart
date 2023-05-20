@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { Btn, Input } from './Core/Exports';
 import { IconSearch, IconShoppingCart, IconMoonFilled, IconSunFilled } from '@tabler/icons-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Link, useLoaderData } from 'react-router-dom';
 import useMinScroll from '../hooks/useMinScroll';
-import { useNavigate, useLocation, Link, useLoaderData } from 'react-router-dom';
 import { useDidUpdate } from '@mantine/hooks';
+import { useState, useEffect } from 'react';
+import { Btn } from './Core/Exports';
+import { SearchBar } from './Exports';
 interface Props {
-    hiddeFn: () => void,
+    setShowSideBar: React.Dispatch<React.SetStateAction<boolean>>,
+    setShowSearch: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function Navbar({ hiddeFn }: Props) {
+function Navbar({ setShowSideBar, setShowSearch }: Props) {
     const { darkModeOnLS } = useLoaderData() as { darkModeOnLS: boolean };
-
-    const [handleInput, setHandleInput] = useState<string>('')
     const [darkModeOn, setDarkModeOn] = useState<boolean>(darkModeOnLS)
     const scroll = useMinScroll(50);
-    const navigate = useNavigate();
-    const location = useLocation();
+
 
     useEffect(() => {
         if (darkModeOn) document.documentElement.classList.add('dark')
@@ -32,15 +32,7 @@ function Navbar({ hiddeFn }: Props) {
         }
     }, [darkModeOn])
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        const searchParams: URLSearchParams = new URLSearchParams(location.search);
-        const excludedParams: string[] = ['q', 'pg'];
-        let params: string[] = [];
-        searchParams.forEach((value, key) => { if (!excludedParams.includes(key)) { params.push(`${key}=${value}`); } })
-        const newSearchParams = new URLSearchParams(params.join('&'));
-        if (handleInput) { navigate(`/search?q=${handleInput}&pg=1&${newSearchParams.toString()}`) }
-    }
+
 
     return (
         <nav className={`${scroll ? ' bg-neutral-1/60 shadow-md dark:(bg-neutral-6/10)' : 'bg-neutral-3/20 dark:(bg-db/20)'} flex justify-between transition-[backgroundColor] transition-duration-500 backdrop-blur-lg max-w-5xl w-full mx-auto rounded-lg p-2 gap-2`}>
@@ -52,29 +44,14 @@ function Navbar({ hiddeFn }: Props) {
                 </Link>
             </Btn>
 
-            <form
-                method="get"
-                onSubmit={handleSubmit}
-                className={`${scroll ? 'bg-neutral-1/60 dark:(bg-neutral-8/60)' : 'bg-neutral-1/50 dark:(bg-neutral-5/10)'} flex rounded-lg transition-colors transition-duration-300`}
-            >
-                <Input
-                    variant='search'
-                    name='q'
-                    id='inputSearch'
-                    onChange={(e) => setHandleInput(e.target.value)}
-                />
-                <Btn variant='cart' classNameCustom={'rounded-l-none'} type='submit'>
+            <div className='flex gap-1'>
+                <Btn variant='cart' onClick={() => { setShowSearch(true) }}>
                     <IconSearch size={20} />
                 </Btn>
-            </form>
-
-            <div className='flex gap-1'>
-                <Btn onClick={() => { setDarkModeOn(!darkModeOn) }} variant='cart'>
-                    {
-                        darkModeOn ? <IconSunFilled size={20} /> : <IconMoonFilled size={20} />
-                    }
+                <Btn variant='cart' onClick={() => { setDarkModeOn(!darkModeOn) }} >
+                    {darkModeOn ? <IconSunFilled size={20} /> : <IconMoonFilled size={20} />}
                 </Btn>
-                <Btn onClick={hiddeFn} variant='cart'>
+                <Btn variant='cart' onClick={() => { setShowSideBar(true) }} >
                     <IconShoppingCart size={20} />
                 </Btn>
             </div>

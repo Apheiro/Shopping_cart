@@ -13,3 +13,4 @@ export { FilterForm } from "./FilterForm";
 export { SortForm } from "./SortForm";
 export { StaticInfoCard } from "./StaticInfoCard";
 export { FoldingInfoCard } from "./FoldingInfoCard";
+export { SearchBar } from "./SearchBar";

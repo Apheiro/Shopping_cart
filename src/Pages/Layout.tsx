@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Navbar, SideMenu } from '../Components/Exports'
-import { Footer } from '../Components/Exports';
+import { Navbar, SideMenu, Footer, SearchBar } from '../Components/Exports'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigation } from 'react-router-dom';
 import { IconLoader2 } from '@tabler/icons-react'
@@ -9,34 +8,43 @@ interface Props {
 }
 
 export default function Layout({ children }: Props) {
-  const [showElements, setShowElements] = useState<boolean>(false)
+  const [showSideBar, setShowSideBar] = useState<boolean>(false)
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const isLoading = useNavigation().state === 'loading'
 
   useEffect(() => {
-    if (showElements) document.body.style.overflowY = 'hidden'
+    if (showSideBar || showSearch) document.body.style.overflowY = 'hidden'
     else document.body.style.overflowY = 'unset'
-  }, [showElements])
+  }, [showSideBar, showSearch])
 
   return (
     <div className="min-h-screen flex-col flex items-start ">
       <header key={'headerKey'} className='fixed flex w-full left-0 top-4 px-4 z-10'>
-        <Navbar hiddeFn={() => { setShowElements(!showElements) }} />
+        <Navbar setShowSideBar={setShowSideBar} setShowSearch={setShowSearch} />
       </header>
+
+
       <AnimatePresence>
         {
-          showElements &&
-          <div id='sideMenu'>
-            <motion.div
-              className={`z-10 bg-black/20 w-screen h-screen fixed left-0 top-0`}
-              onClick={() => { setShowElements(false) }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-            <SideMenu setShowElements={setShowElements} />
-          </div>
+          (showSideBar || showSearch) &&
+          <motion.div
+            className={`bg-black/20 w-screen h-screen fixed left-0 top-0 z-10`}
+            onClick={() => {
+              if (showSideBar) setShowSideBar(false)
+              if (showSearch) setShowSearch(false)
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
         }
       </AnimatePresence>
+
+      <AnimatePresence>
+        {showSideBar && <SideMenu key={'sideMenuKey'} setShowSideBar={setShowSideBar} />}
+        {showSearch && <SearchBar key={'searchKey'} setShowSearch={setShowSearch} />}
+      </AnimatePresence>
+
 
       <main className='w-full flex flex-col'>
         <div className='flex flex-col gap-5 sm:gap-30'>

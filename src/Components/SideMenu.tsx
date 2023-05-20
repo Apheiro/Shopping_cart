@@ -8,7 +8,7 @@ import { memo } from "react"
 import { motion } from "framer-motion"
 
 interface Props {
-    setShowElements: React.Dispatch<React.SetStateAction<boolean>>
+    setShowSideBar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function totalPrice(products: ReqParams[]) {
@@ -25,19 +25,19 @@ function productsAddUrl(products: ReqParams[]) {
     return productsString
 }
 
-const SideMenu = memo(({ setShowElements }: Props) => {
+const SideMenu = memo(({ setShowSideBar }: Props) => {
     const { products } = useLoaderData() as { products: ReqParams[] }
 
     return (
         <motion.div
-            className={`z-10 flex flex-col h-screen w-full fixed left-100% max-w-xl bg-neutral-3 text-neutral-9 dark:(bg-db text-neutral-3)`}
+            className={`z-10 fixed left-100% flex flex-col h-screen w-full max-w-xl bg-neutral-3 text-neutral-9 dark:(bg-db text-neutral-3)`}
             initial={{ x: '0' }}
             animate={{ x: '-100%' }}
             exit={{ x: '0' }}
             transition={{ duration: 1, ease: [0.34, 1.09, 0.14, 1] }}
         >
             <div className="p-3 flex gap-3 items-center">
-                <Btn variant="cart" onClick={() => { setShowElements(false) }}>
+                <Btn variant="cart" onClick={() => { setShowSideBar(false) }}>
                     <IconChevronLeft />My cart
                 </Btn>
                 <p className="font-bold "></p>
@@ -54,7 +54,7 @@ const SideMenu = memo(({ setShowElements }: Props) => {
                                 quantity={parseInt(quantity)}
                                 quantityLimit={parseInt(quantityLimit)}
                                 sku={parseInt(sku)}
-                                setShowElements={setShowElements}
+                                setShowSideBar={setShowSideBar}
                             />
                         )
                     }
@@ -69,7 +69,7 @@ const SideMenu = memo(({ setShowElements }: Props) => {
                                 Go to pay
                             </a>
                         </Btn> :
-                        <Btn variant="pay" classNameCustom='!bg-db !cursor-unset'>
+                        <Btn variant="pay" classNameCustom='bg-neutral-3 dark:(!bg-db) !cursor-unset'>
                             Add products
                         </Btn>
                 }

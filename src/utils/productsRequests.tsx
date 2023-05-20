@@ -1,4 +1,5 @@
 import API_KEY from "../a/apikey";
+import queryString from 'query-string';
 
 interface Products {
     image: string,
@@ -59,7 +60,7 @@ const urlProducts = "https://api.bestbuy.com/v1/products";
 
 function formatQuery(query: string): string {
     const words = query.split(' ');
-    const result = words.map(word => 'search=' + word);
+    const result = words.map(word => queryString.stringify({ search: word }));
     return result.join('&');
 }
 
@@ -73,7 +74,8 @@ export async function getProductsList(reqParams: ReqParams) {
         sort: reqParams.sr === 'bm' || !reqParams.sr ? '' : reqParams.sr,
         apiKey: API_KEY,
     });
-    const attributes = `((${formatQuery(reqParams.q)}${reqParams.condition ? `&condition=${reqParams.condition}` : ''}${reqParams.min ? `&salePrice>${reqParams.min}` : ''}${reqParams.max ? `&salePrice<${reqParams.max}` : ''}))`
+
+    const attributes = `((${formatQuery(reqParams.q)})${reqParams.type ? `&type=${reqParams.type}` : ''}${reqParams.condition ? `&condition=${reqParams.condition}` : ''}${reqParams.min ? `&salePrice>${reqParams.min}` : ''}${reqParams.max ? `&salePrice<${reqParams.max}` : ''})`
     return fetch(`${urlProducts}${attributes}?${paramsBB.toString()}`, { mode: 'cors' })
         .then(res => res.json())
         .then(data => {

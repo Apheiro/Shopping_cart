@@ -64,7 +64,7 @@ export default function Product() {
             case 'Available':
                 return <Btn variant="base" disabled={disabledBtn} onClick={handleSubmit} classNameCustom={disabledBtn && '!bg-db'}>{isProductInCart ? 'Added' : 'Add to cart'}</Btn>
             case 'SoldOut':
-                return <Btn variant="base" disabled classNameCustom={'!bg-db'}>Sold out</Btn>
+                return <Btn variant="base" disabled classNameCustom={'!bg-neutral-3 dark:!bg-db'}>Sold out</Btn>
             case 'PreOrder':
                 return <Btn variant="base" disabled={disabledBtn} onClick={handleSubmit} classNameCustom={`${disabledBtn && '!bg-db'} !bg-amber-4/30 !color-amber-4`}>{isProductInCart ? 'Added' : 'Pre-order'}</Btn>
         }
@@ -100,13 +100,13 @@ export default function Product() {
                             </div>
                             <h1 className="font-bold text-xl">{product.name}</h1>
                             <div className="flex justify-between">
-                                <p><span className="font-bold">Model:</span> {product.model}</p>
-                                <p><span className="font-bold">SKU:</span> {product.sku}</p>
+                                <p><span className="font-bold">Model:</span>{product.model}</p>
+                                <p><span className="font-bold">SKU:</span>{product.sku}</p>
                             </div>
                             <div className="flex justify-between items-center">
                                 <div>
                                     <p className="font-bold">Price</p>
-                                    <h2 className="text-xl">${product.salePrice} {product.salePrice < product.regularPrice && <span className="line-through decoration-2"> {product.regularPrice}</span>}</h2>
+                                    <h2 className="text-xl">${product.salePrice} {product.salePrice < product.regularPrice && <span className="line-through decoration-2">{product.regularPrice}</span>}</h2>
                                 </div>
                                 {buttonState(product.orderable)}
                             </div>

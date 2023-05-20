@@ -12,7 +12,7 @@ interface Props {
     quantity: number,
     quantityLimit: number,
     sku: number,
-    setShowElements: React.Dispatch<React.SetStateAction<boolean>>,
+    setShowSideBar: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 function createFormData(formType: 'change' | 'remove', actualURL: string, product: number, quantity?: string) {
@@ -28,7 +28,7 @@ function createFormData(formType: 'change' | 'remove', actualURL: string, produc
     return formData
 }
 
-function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, setShowElements }: Props) {
+function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, setShowSideBar }: Props) {
     const [disabledBtn, setDisabledBtn] = useState(false)
     const [overLimit, setOverLimit] = useState(false)
     const [expandProductList, setExpandProductList] = useState(false)
@@ -102,7 +102,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
             <motion.div {...buttonsProps}>
                 <div className="flex gap-2">
                     <Btn variant='removeCart' disabled={disabledBtn} onClick={deleteItemFromCart}>Remove</Btn>
-                    <Btn asChild variant="base" onClick={() => { setShowElements(false) }}>
+                    <Btn asChild variant="base" onClick={() => { setShowSideBar(false) }}>
                         <Link to={`/product/${sku}`}>Go to product page</Link>
                     </Btn>
                 </div>

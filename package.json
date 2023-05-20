@@ -16,6 +16,7 @@
     "@unocss/reset": "^0.51.8",
     "framer-motion": "^10.12.12",
     "keen-slider": "^6.8.5",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0"

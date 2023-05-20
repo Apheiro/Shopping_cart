@@ -9,17 +9,18 @@ interface Props {
 export default function FilterForm({ defaultValue }: Props) {
     const location = useLocation();
     const navigate = useNavigate()
-    const [radioSelected, setRadioSelected] = useState<string>(defaultValue.condition);
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const searchParams = new URLSearchParams(location.search);
         const formRef = e.target;
         const formData = new FormData(formRef as HTMLFormElement)
+
         const excludeParams: string[] = ['q', 'sr', 'pg']
         let deleteParams: string[] = []
         searchParams.forEach((value, key) => { if (!excludeParams.includes(key)) { deleteParams.push(key) } })
         deleteParams.forEach(key => searchParams.delete(key))
+
         formData.forEach((value, key) => { if (value) { searchParams.set(key, value.toString()) } })
         navigate(`/search?${searchParams.toString()}`)
     }
@@ -44,15 +45,15 @@ export default function FilterForm({ defaultValue }: Props) {
                         name="condition"
                         value="new"
                         Title="New"
-                        radioSelected={radioSelected}
-                        setRadioSelected={setRadioSelected}
+                        variantStyle="clasic"
+                        radioSelectedDefault={defaultValue.condition}
                     />
                     <Radios
                         name="condition"
                         value="refurbished"
                         Title="Refurbished"
-                        radioSelected={radioSelected}
-                        setRadioSelected={setRadioSelected}
+                        variantStyle="clasic"
+                        radioSelectedDefault={defaultValue.condition}
                     />
                 </div>
                 <div className="flex flex-col gap-2">

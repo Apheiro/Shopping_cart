@@ -10,7 +10,8 @@ import { AnimatePresence } from 'framer-motion';
 export async function loader(args: LoaderFunctionArgs) {
     const url = new URL(args.request.url);
     const params: ReqParams = {};
-    url.searchParams.forEach((value, key) => { params[key] = value; });
+    url.searchParams.forEach((value, key) => params[key] = value);
+    console.log(params)
     const result = await getProductsList(params);
     return { searchResult: result, reqParams: params };
 }
@@ -58,7 +59,7 @@ export default function Search() {
         >
             <div className="flex flex-col md:(grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]) gap-4 w-full max-w-5xl">
 
-                <div className=" bg-neutral-1 shadow-md dark:(bg-dbm) h-fit p-3 rounded-lg col-start-2 col-end-3 flex flex-wrap gap-4 justify-center sm:justify-between items-center">
+                <div className=" bg-neutral-1 shadow-md dark:(bg-dbm) h-fit p-3 rounded-lg col-start-2 col-end-3 flex flex-wrap gap-4 flex-col sm:(flex-row) justify-between items-center">
                     <div className="flex items-center gap-2">
                         <Btn variant="cart" onClick={toggleFilter}>
                             <IconFilter size={20} />

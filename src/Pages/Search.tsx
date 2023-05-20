@@ -11,7 +11,6 @@ export async function loader(args: LoaderFunctionArgs) {
     const url = new URL(args.request.url);
     const params: ReqParams = {};
     url.searchParams.forEach((value, key) => params[key] = value);
-    console.log(params)
     const result = await getProductsList(params);
     return { searchResult: result, reqParams: params };
 }
@@ -83,28 +82,28 @@ export default function Search() {
                     }
                 </AnimatePresence>
                 <div className={`flex ${noProductsFound && 'justify-center items-center'} flex-col gap-4 col-start-2 col-end-3 h-full`}>
-                    {/* <AnimatePresence mode="wait"> */}
-                    {
-                        noProductsFound &&
-                        <h1 className="text-2xl font-bold text-neutral-5"> No products found</h1>
-                    }
-                    {
-                        searchResult.products.map(
-                            ({ image, condition, name, modelNumber, sku, salePrice, regularPrice, orderable }) =>
-                                <ProductResultCard
-                                    key={`productSearchResult-${sku}`}
-                                    img={image}
-                                    condition={condition}
-                                    title={name}
-                                    model={modelNumber}
-                                    sku={sku}
-                                    price={salePrice}
-                                    oldPrice={regularPrice}
-                                    orderable={orderable}
-                                />
-                        )
-                    }
-                    {/* </AnimatePresence> */}
+                    <AnimatePresence mode="wait">
+                        {
+                            noProductsFound &&
+                            <h1 className="text-2xl font-bold text-neutral-5"> No products found</h1>
+                        }
+                        {
+                            searchResult.products.map(
+                                ({ image, condition, name, modelNumber, sku, salePrice, regularPrice, orderable }) =>
+                                    <ProductResultCard
+                                        key={`productSearchResult-${sku}`}
+                                        img={image}
+                                        condition={condition}
+                                        title={name}
+                                        model={modelNumber}
+                                        sku={sku}
+                                        price={salePrice}
+                                        oldPrice={regularPrice}
+                                        orderable={orderable}
+                                    />
+                            )
+                        }
+                    </AnimatePresence>
                 </div>
                 {
                     searchResult && searchResult.totalPages > 1 &&

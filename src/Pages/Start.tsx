@@ -35,7 +35,7 @@ export default function Start() {
                     <Btn classNameCustom="self-start" variant="shop">SHOP NOW</Btn>
                 </div>
                 <div className="flex op-0 md:(op-100) max-w-xl w-full aspect-square justify-center items-center absolute right-0 transition-opacity duration-300">
-                    <img src="products.png" alt="image3Dproducts" />
+                    <img src="products.png" alt="image3Dproducts" className="drop-shadow-2xl" />
                 </div>
             </div>
 

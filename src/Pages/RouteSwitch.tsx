@@ -9,7 +9,6 @@ const router = createBrowserRouter(
     createRoutesFromElements(
         <Route
             path="/"
-            key={"cagadita"}
             element={<Root />}
             loader={rootLoader}
             action={rootAction}

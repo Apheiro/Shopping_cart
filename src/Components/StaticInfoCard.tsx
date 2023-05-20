@@ -11,7 +11,7 @@ function StaticInfoCard({ title, description, customClass }: Props): JSX.Element
     const titleStyle: string = 'flex items-center text-neutral-7 dark:(text-neutral-400) text-md 2sm:text-xl font-bold'
     const [seeMore, setSeeMore] = useState<boolean>(false)
     const [itClamp, setItClamp] = useState<boolean>(false)
-    const descriptionStyle: string = `text-sm text-justify ${!seeMore && 'line-clamp-11'}`
+    const descriptionStyle: string = `text-sm text-justify ${!seeMore && 'line-clamp-11 break-words'} `
     const paraRef = useRef<HTMLParagraphElement>(null)
 
     useEffect(() => {
@@ -32,7 +32,7 @@ function StaticInfoCard({ title, description, customClass }: Props): JSX.Element
                 <Btn
                     variant='base'
                     onClick={() => setSeeMore(!seeMore)}
-                    classNameCustom={'!bg-dbm !p-0 w-fit justify-end self-end'}
+                    classNameCustom={' !bg-transparent !p-0 w-fit justify-end self-end'}
                 >
                     {seeMore ? 'Show less' : 'Show more'}
                 </Btn>}

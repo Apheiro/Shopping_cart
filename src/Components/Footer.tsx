@@ -1,17 +1,17 @@
 import { Btn } from './Core/Exports'
-import { IconBrandTwitterFilled, IconBrandFacebookFilled, IconBrandInstagram } from '@tabler/icons-react'
+import { IconBrandTwitterFilled, IconBrandFacebookFilled, IconBrandInstagram, IconBrandGithubFilled } from '@tabler/icons-react'
 import { memo } from 'react';
 
 const Footer = memo(() => {
     return (
         <footer className=" bg-neutral-1 dark:(bg-dbm) w-full flex justify-center items-center p-4 ">
-            <div className='md:grid md:max-w-7xl gap-7 flex flex-col'>
+            <div className='lg:grid md:max-w-7xl gap-7 flex flex-col'>
                 <div className="row-start-1 row-end-3 flex flex-col gap-3">
                     <h3 className="text-lg font-bold ">About us</h3>
                     <p className='text-sm'>
                         In our online store, we have set out to provide you with an exceptional shopping experience. To do so, we have created an attractive and carefully designed environment, where you can find everything you need to make your online purchases easily, quickly and without unnecessary distractions.<br />
                         With our shopping cart, you can add and remove products with a single click, control the quantity of each product you want to buy, and see the total amount of your purchase in real time. In addition, we have designed our site with you in mind, with smooth animations that allow you to navigate without interruptions, and a clear layout of information that makes everything easy to find and read.<br />
-                        Thank you for visiting us and we hope you enjoy shopping at our online store!
+                        Thank you for visiting us and we hope you enjoy shopping at our online store! (this is all fake, obviously :v but you can actually use this page to search for some products and buy them.)
                     </p>
                 </div>
 
@@ -36,6 +36,19 @@ const Footer = memo(() => {
                         <Btn variant='cart' ><IconBrandFacebookFilled /></Btn>
                         <Btn variant='cart' ><IconBrandInstagram /></Btn>
                     </div>
+                </div>
+
+                <div className='flex flex-col gap-2 '>
+                    <Btn asChild variant='cart' classNameCustom='w-fit'>
+                        <a href="https://github.com/Apheiro/Shopping_cart">
+                            Powered by Apheiros <IconBrandGithubFilled />
+                        </a>
+                    </Btn>
+                    <Btn asChild variant='cart' classNameCustom='w-fit'>
+                        <a href="https://bestbuyapis.github.io/api-documentation/?shell#overview">
+                            Developed with <img className='h-6' src="https://seeklogo.com/images/B/Best_Buy-logo-1B2D76155D-seeklogo.com.png" alt="bestbuylogo" /> API
+                        </a>
+                    </Btn>
                 </div>
             </div>
         </footer>

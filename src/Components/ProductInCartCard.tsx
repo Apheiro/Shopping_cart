@@ -107,7 +107,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
                     </Btn>
                 </div>
                 <div>
-                    <p className="text-lg" ><span className={darkerText}>Total: </span>${price * quantity}</p>
+                    <p className="text-lg" ><span className={darkerText}>Total: </span>${(price * quantity).toFixed(2)}</p>
                 </div>
             </motion.div>
         </motion.div>

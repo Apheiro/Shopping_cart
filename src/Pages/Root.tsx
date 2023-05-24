@@ -1,8 +1,9 @@
-import { ActionFunctionArgs, Outlet, redirect } from 'react-router-dom';
+import { ActionFunctionArgs, Outlet } from 'react-router-dom';
 import Layout from './Layout';
 import { getCartProducts, editCart } from '../utils/productsRequests';
 import { removeFromCart } from '../utils/productsRequests';
 import { ScrollRestoration } from "react-router-dom";
+
 export async function loader() {
     const products = await getCartProducts()
     const darkModeOnLS = Boolean(localStorage.getItem('darkModShoppingCart'))

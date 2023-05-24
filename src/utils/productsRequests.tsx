@@ -1,4 +1,4 @@
-import API_KEY from "../a/apikey";
+const API_KEY = import.meta.env.VITE_API_KEY
 import queryString from 'query-string';
 
 interface Products {
@@ -65,7 +65,7 @@ function formatQuery(query: string): string {
 }
 
 export async function getProductsList(reqParams: ReqParams) {
-    console.log('request from search component')
+    // console.log('request from search component')
     const paramsBB = new URLSearchParams({
         format: "json",
         pageSize: '10',
@@ -76,7 +76,6 @@ export async function getProductsList(reqParams: ReqParams) {
     });
 
     const attributes = `((${formatQuery(reqParams.q)})${reqParams.type ? `&type=${reqParams.type}` : ''}${reqParams.condition ? `&condition=${reqParams.condition}` : ''}${reqParams.min ? `&salePrice>${reqParams.min}` : ''}${reqParams.max ? `&salePrice<${reqParams.max}` : ''})`
-    console.log(`${urlProducts}${attributes}?${paramsBB.toString()}`)
     return fetch(`${urlProducts}${attributes}?${paramsBB.toString()}`, { mode: 'cors' })
         .then(res => res.json())
         .then(data => {
@@ -97,7 +96,7 @@ export async function getProductsList(reqParams: ReqParams) {
 }
 
 export async function getProduct(sku: string) {
-    console.log('request from product component')
+    // console.log('request from product component')
     const paramsBB = new URLSearchParams({
         show: "name,regularPrice,salePrice,longDescription,description,plot,features,details,sku,images,image,condition,modelNumber,orderable,quantityLimit",
         apiKey: API_KEY

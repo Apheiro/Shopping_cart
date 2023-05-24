@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Btn } from "./Core/Exports"
 import { IconChevronRight, IconChevronLeft } from "@tabler/icons-react"
-import useDebounceFn from '../hooks/useDebounceFn'
-import { computeMikkTSpaceTangents } from 'three/examples/jsm/utils/BufferGeometryUtils'
+import useDebounceFn from '../hooks/useDebounceFn';
 
 interface Props {
     totalPages: number,

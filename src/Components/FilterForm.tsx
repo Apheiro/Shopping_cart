@@ -1,6 +1,5 @@
 import { Form, useLocation, useNavigate } from "react-router-dom";
 import { Radios, Input, Btn } from "./Core/Exports";
-import { useState } from "react";
 import { motion } from "framer-motion"
 interface Props {
     defaultValue: { condition: string, min: string, max: string };
@@ -16,12 +15,13 @@ export default function FilterForm({ defaultValue }: Props) {
         const formRef = e.target;
         const formData = new FormData(formRef as HTMLFormElement)
 
-        const excludeParams: string[] = ['q', 'sr', 'pg']
+        const excludeParams: string[] = ['q', 'sr', 'pg', 'type']
         let deleteParams: string[] = []
         searchParams.forEach((value, key) => { if (!excludeParams.includes(key)) { deleteParams.push(key) } })
         deleteParams.forEach(key => searchParams.delete(key))
-
         formData.forEach((value, key) => { if (value) { searchParams.set(key, value.toString()) } })
+        searchParams.set('pg', '1')
+
         navigate(`/search?${searchParams.toString()}`)
     }
 

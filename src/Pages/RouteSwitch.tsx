@@ -33,7 +33,10 @@ const router = createBrowserRouter(
                 action={productAction}
             />
         </Route>
-    )
+    ), {
+    basename: "/Shopping_cart",
+
+}
 )
 
 export default function RouteSwitch() { return <RouterProvider router={router} /> }

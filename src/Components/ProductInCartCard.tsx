@@ -1,6 +1,6 @@
 import { Btn, Input } from "./Core/Exports";
 import { useState, useRef } from 'react'
-import { useLocation, useSubmit, Link, useFetcher } from "react-router-dom"
+import { useLocation, Link, useFetcher } from "react-router-dom"
 import { IconAlertTriangle } from '@tabler/icons-react'
 import useDebounceFn from '../hooks/useDebounceFn'
 import { motion } from "framer-motion"
@@ -42,7 +42,7 @@ function ProductInCartCard({ img, title, price, quantity, quantityLimit, sku, se
 
 
     function changeQuantity(e: React.ChangeEvent<HTMLInputElement>) {
-        if (parseInt(e.currentTarget.value) > quantityLimit) { setOverLimit(true) }
+        if (parseInt(e.currentTarget.value) > quantityLimit || parseInt(e.currentTarget.value) < 1) { setOverLimit(true) }
         else {
             setOverLimit(false)
             const formData = createFormData('change', `${location.pathname}${location.search}`, sku, e.currentTarget.value)

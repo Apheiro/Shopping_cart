@@ -1,11 +1,10 @@
 import { IconSearch, IconShoppingCart, IconMoonFilled, IconSunFilled } from '@tabler/icons-react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Link, useLoaderData } from 'react-router-dom';
 import useMinScroll from '../hooks/useMinScroll';
 import { useDidUpdate } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import { Btn } from './Core/Exports';
-import { SearchBar } from './Exports';
+
 interface Props {
     setShowSideBar: React.Dispatch<React.SetStateAction<boolean>>,
     setShowSearch: React.Dispatch<React.SetStateAction<boolean>>

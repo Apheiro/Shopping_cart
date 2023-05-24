@@ -1,6 +1,6 @@
 import { Radios, Btn, Input } from "./Core/Exports";
 import { IconSearch, IconChevronLeft, IconSettingsSearch } from '@tabler/icons-react';
-import { useNavigate, useLocation, useLoaderData } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import queryString from 'query-string';

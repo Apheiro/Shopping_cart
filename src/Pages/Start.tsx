@@ -1,5 +1,6 @@
-import { Btn } from "../Components/Core/Exports"
+import { Btn } from "../Components/Core/Exports";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const startAnimation = {
     initial: {
@@ -32,7 +33,11 @@ export default function Start() {
                     <p className=" text-justify">
                         Simplify your online shopping with our easy-to-use cart. Browse products, add to your cart, and checkout with just a few clicks. Convenient shopping made simple.
                     </p>
-                    <Btn classNameCustom="self-start" variant="shop">SHOP NOW</Btn>
+                    <Btn variant="shop">
+                        <Link to="/search?q=rtx&type=hardgood&pg=1&sr=salePrice.dsc">
+                            SHOP NOW
+                        </Link>
+                    </Btn>
                 </div>
                 <div className="flex op-0 md:(op-100) max-w-xl w-full aspect-square justify-center items-center absolute right-0 transition-opacity duration-300">
                     <img src="products.png" alt="image3Dproducts" className="drop-shadow-2xl" />

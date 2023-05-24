@@ -35,7 +35,7 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
     }
 
     return (
-        <motion.label
+        <motion.div
             className='w-fit h-fit'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 1 }}
@@ -46,7 +46,7 @@ function Btn({ asChild, variant, classNameCustom, type = 'button', ...props }: P
                 type={asChild ? undefined : type}
                 {...props}
             />
-        </motion.label>
+        </motion.div>
 
     )
 }
